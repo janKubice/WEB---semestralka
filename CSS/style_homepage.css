@@ -1,0 +1,26 @@
+html, body{
+    height: 100%    ;
+}
+
+.register{
+    background-color: rgb(17, 47, 145);
+    float:left;
+}
+
+.login{
+    background-color: rgb(124, 104, 116);
+    float:right
+}
+
+.center {
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+.halfWidth{
+    height: 100%;
+    width: 50%;
+} 
