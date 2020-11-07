@@ -12,15 +12,71 @@ html, body{
     float:right
 }
 
-.center {
+.center{
+    display: inline;
     margin: 0;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-  }
+}
 
 .halfWidth{
     height: 100%;
     width: 50%;
-} 
+}
+
+.registerAnimation_register{
+    background-color: rgb(17, 47, 145);
+    height: 100%;
+    width: 100%;
+    float:left;
+    -webkit-transition: width 1s;
+    /* Safari */
+    transition: width 1s;
+}
+
+.registerAnimation_login{
+    height: 100%;
+    width: 0%;
+    float: right;
+    -webkit-transition: width 1s;
+    /* Safari */
+    transition: width 1s;
+    display: none;
+}
+
+.loginAnimation_register{
+    background-color: rgb(17, 47, 145);
+    height: 100%;
+    width: 0%;
+    float:left;
+    -webkit-transition: width 1s;
+    /* Safari */
+    transition: width 1s;
+    display: none;
+}
+
+.loginAnimation_login{
+    background-color: rgb(124, 104, 116);;
+    height: 100%;
+    width: 100%;
+    float: right;
+    -webkit-transition: width 1s;
+    /* Safari */
+    transition: width 1s;
+}
+
+.invisible{
+    display: none;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+ }

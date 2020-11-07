@@ -1,25 +1,119 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!-- nastaveni viewportu je zakladem pro responzivni design i Boostrap -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Ukázka Bootstrapu</title>
+<head>
+    <meta charset="utf-8">
+    <!-- nastaveni viewportu je zakladem pro responzivni design i Boostrap -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-        <!-- CSS Bootstrapu (JS v paticce) -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Ukázka Bootstrapu</title>
 
 
-        
+    <!-- CSS Bootstrapu (JS v paticce) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    </head>
-    <body>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="C:\Users\misab\Documents\VisualStudioCode\WEB - Semestralka\CSS\style_profile.css" />
 
-    </body>
+</head>
+
+<body>
+    <div class="topnav">
+        <div class="mainPanelButtons">
+            <a class="active" href="#home">Profile</a>
+            <a href="#news">Main page</a>
+            <a href="#contact">Messeges</a>
+            <a href="#about">Settings</a>
+        </div>
+        <div class="mainPanelLogo">
+            <a>LOGO ZDE</a>
+        </div>
+    </div>
+    <div id="profile-left" class="profile-left">
+        <div class="profile-img">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                alt="" />
+            <div class="file btn btn-lg btn-primary">
+                Upload profile photo
+                <input type="file" name="file" />
+            </div>
+        </div>
+
+        <div class="profileInfoTable">
+            About
+            <table>
+                <tr>
+                    <td>Age: </td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td>SOMETHING</td>
+                </tr>
+                <tr>
+                    <td>Country</td>
+                    <td>Czech rep</td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td>Pilsen</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="profile-mid" class="profile-left">
+        <div id="new-post" class="">
+            <form action="/action_page.php">
+                <div class="">
+                    <div class="">
+                        <label for="fname">First Name</label>
+                    </div>
+                    <div class="">
+                        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+                    </div>
+                </div>
+                <div class="">
+                    <div class="">
+                        <label for="lname">Last Name</label>
+                    </div>
+                    <div class="">
+                        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+                    </div>
+                </div>
+                <div class="">
+                    <div class="">
+                        <label for="country">Country</label>
+                    </div>
+                    <div class="">
+                        <select id="country" name="country">
+                            <option value="australia">Australia</option>
+                            <option value="canada">Canada</option>
+                            <option value="usa">USA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="">
+                        <label for="subject">Subject</label>
+                    </div>
+                    <div class="">
+                        <textarea id="subject" name="subject" placeholder="Write something.."
+                            style="height:200px"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+        <div id="posts">
+
+        </div>
+    </div>
+    </div>
+</body>
+
 </html>
