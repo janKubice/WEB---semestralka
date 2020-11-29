@@ -5,22 +5,18 @@
 
 //// Pripojeni k databazi ////
 
-/** Adresa serveru. */
-define("DB_SERVER","147.228.63.10"); // https://students.kiv.zcu.cz
-/** Nazev databaze. */
-define("DB_NAME","db1_vyuka");
-/** Uzivatel databaze. */
-define("DB_USER","db1_vyuka");
-/** Heslo uzivatele databaze */
-define("DB_PASS","db1_vyuka");
+define("DB_SERVER","localhost");
+define("DB_NAME","weby_sp");
+define("DB_USER","root");
+define("DB_PASS","");
 
 
 //// Nazvy tabulek v DB ////
 
-/** Tabulka s pohadkami. */
-define("TABLE_INTRODUCTION", "orionlogin_mvc_introduction");
-/** Tabulka s uzivateli. */
-define("TABLE_USER", "orionlogin_mvc_user");
+define("TABLE_ROLE", "role");
+define("TABLE_USER", "uzivatel");
+define("TABLE_COMMENT", "komentar");
+define("TABLE_POST", "prispevek");
 
 
 //// Dostupne stranky webu ////
@@ -35,7 +31,7 @@ const DIRECTORY_VIEWS = "Views";
 /** Dostupne webove stranky. */
 const WEB_PAGES = array(
     // uvodni stranka
-    "uvod" => array("file_name" => "IntroductionController.class.php",
+    "title" => array("file_name" => "IntroductionController.class.php",
                     "class_name" => "IntroductionController",
                     "title" => "Úvodní stránka"),
     // sprava uzivatelu
@@ -57,6 +53,6 @@ const WEB_PAGES = array(
 );
 
 /** Klic defaultni webove stranky. */
-const DEFAULT_WEB_PAGE_KEY = "uvod";
+const DEFAULT_WEB_PAGE_KEY = "title";
 
 ?>

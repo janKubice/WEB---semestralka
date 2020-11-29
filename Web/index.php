@@ -31,7 +31,6 @@ class ApplicationStart {
             $pageKey = DEFAULT_WEB_PAGE_KEY; 
         }
         $pageInfo = WEB_PAGES[$pageKey];
-
         require_once(DIRECTORY_CONTROLLERS ."/". $pageInfo["file_name"]);
 
         $controller = new $pageInfo["class_name"];

@@ -32,6 +32,10 @@ class DatabaseModel {
     public function updatePost(){
 
     }
+
+    public function getFirstXPosts(){
+        
+    }
     
     /**
      *  Vrati seznam vsech uzivatelu pro spravu uzivatelu.

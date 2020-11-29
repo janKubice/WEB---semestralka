@@ -31,10 +31,9 @@ class HTMLMaker {
             <body>
             <div class="topnav">
         <div class="mainPanelButtons">
-            <a class="active" href="#home">Profile</a>
+            <a href="">Profile</a>
             <a href="#news">Main page</a>
-            <a href="#contact">Messeges</a>
-            <a href="#about">Settings</a>
+            <a href="#contact">Logout</a>
         </div>
         <div class="mainPanelLogo">
             <a>LOGO ZDE</a>

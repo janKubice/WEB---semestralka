@@ -11,7 +11,6 @@ class TemplateBasics {
      */
     public function getHTMLHeader(string $pageTitle) {
         ?>
-
         <!doctype html>
         <html>
             <head>

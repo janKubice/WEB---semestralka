@@ -1,61 +1,26 @@
 <?php
-///////////////////////////////////////////////////////////////////////////
-/////////// Sablona pro zobrazeni stranky se spravou uzivatelu  ///////////
-///////////////////////////////////////////////////////////////////////////
-
-//// pozn.: sablona je samostatna a provadi primy vypis do vystupu:
-// -> lze testovat bez zbytku aplikace.
-// -> pri vyuziti Twigu se sablona obejde bez PHP.
-
-//// UKAZKA: Uvod bude vypisovat informace z tabulky, ktera ma nasledujici sloupce:
-// id, date, author, title, text
-/*$tplData['title'] = "Sprava uživatelů (TPL)";
-$tplData['users'] = [
-    array("id_user" => 1, "first_name" => "František", "last_name" => "Noha",
-          "login" => "frnoha", "password" => "Tajne*Heslo", "email" => "fr.noha@ukazka.zcu.cz", "web" => "www.zcu.cz")
-];
-$tplData['delete'] = "Úspěšné mazání.";
-define("DIRECTORY_VIEWS", "../Views");
-const WEB_PAGES = array(
-    "uvod" => array("title" => "Sprava uživatelů (TPL)")
-);
-*/
-
-
-//// vypis sablony
-// urceni globalnich promennych, se kterymi sablona pracuje
 global $tplData;
 
-// pripojim objekt pro vypis hlavicky a paticky HTML
 require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
-<!-- ------------------------------------------------------------------------------------------------------- -->
 
-<!-- Vypis obsahu sablony -->
 <?php
-// muze se hodit:
-//<form method='post'>
-//    <input type='hidden' name='id_user' value=''>
-//    <button type='submit' name='action' value='delete'>Smazat</button>
-//</form>
-
-// hlavicka
 $tplHeaders->getHTMLHeader($tplData['title']);
 
-// mam vypsat hlasku?
 if(isset($tplData['delete'])){
     echo "<div class='alert'>$tplData[delete]</div>";
 }
 
-$res = "<table border><tr><th>ID</th><th>Jméno</th><th>Příjmení</th><th>Login</th><th>E-mail</th><th>Web</th><th>Akce</th></tr>";
-// projdu data a vypisu radky tabulky
+$res = "<table border><tr><th>ID</th><th>Jméno</th><th>Příjmení</th><th>role</th><th>login</th><th>Akce</th></tr>";
 foreach($tplData['users'] as $u){
-    $res .= "<tr><td>$u[id_user]</td><td>$u[first_name]</td><td>$u[last_name]</td><td>$u[login]</td><td>$u[email]</td><td>$u[web]</td>"
+    $res .= "<tr><td>$u[id_uzivatel]</td><td>$u[jmeno]</td><td>$u[prijmeni]</td><td>$u[ROLE_id_role]</td><td>$u[login]</td>"
             ."<td><form method='post'>"
-            ."<input type='hidden' name='id_user' value='$u[id_user]'>"
+            ."<input type='hidden' name='id_uzivatel' value='$u[id_uzivatel]'>"
             ."<button type='submit' name='action' value='delete'>Smazat</button>"
+            ."<button type='submit' name='action' value='promote'>Povýšit</button>"
+            ."<button type='submit' name='action' value='demote'>Ponížit</button>"
             ."</form></td></tr>";
 }
 
