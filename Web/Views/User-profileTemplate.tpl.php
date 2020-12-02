@@ -1,8 +1,15 @@
 <?php
-    // nacteni hlavicky stranky
-    require_once("HTMLMaker.class.php");
-    HTMLMaker::createHeader("Přihlášení a registrování");
+    global $tplData;
 
-    
-    HTMLMaker::createFooter();
+    require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+    $tplHeaders = new TemplateBasics();
+
+    ?>
+
+    <?php
+    $tplData['title'] = 'profil';
+    $tplHeaders->getHTMLHeader($tplData['title']);
+
+  
+    $tplHeaders->getHTMLFooter()
 ?>

@@ -23,11 +23,34 @@ class RegisterController implements IController {
         $tplData = [];
         $tplData['title'] = $pageTitle;
 
-        
-        
-        $obsah = ob_get_clean();
+        if (isset($_POST['action']) and $_POST['action'] == "register")
+        {
+            if (isset($_POST['login']) && isset($_POST['heslo']) && isset($_POST['heslo2']) 
+            && isset($_POST['jmeno']) && isset($_POST['prijmeni'])
+            && $_POST['heslo'] == $_POST['heslo2']
+            && $_POST['login'] != "" && $_POST['heslo'] != "" && $_POST['jmeno'] != ""){
+                $res = $this->db->addUser($_POST['jmeno'], $_POST['prijmeni'], $_POST['login'], $_POST['heslo']);
+                if ($res){
+                    unset($tplData['reg_err']);
+                    $tplData['reg_suc'] = "Registrace proběhla v pořádku!";
+                }
+                else{
+                    unset($tplData['reg_suc']);
+                    $tplData['reg_err'] = "Registrace se nezdařila!";
+                }
+            }
+        else
+            unset($tplData['reg_suc']);
+            $tplData['reg_err'] = "Špatné údaje!";
+        }
+
+       
 
         
+        ob_start();
+        require(DIRECTORY_VIEWS ."/RegisterTemplate.tpl.php");
+        $obsah = ob_get_clean();
+    
         return $obsah;
     }
 

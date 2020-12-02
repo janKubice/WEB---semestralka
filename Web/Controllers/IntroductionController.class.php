@@ -23,8 +23,8 @@ class IntroductionController implements IController {
     public function show(string $pageTitle):string {
         global $tplData;
         $tplData = [];
-        /*$tplData['title'] = $pageTitle;
-        $tplData['stories'] = $this->db->getAllIntroductions();*/
+        $tplData['title'] = $pageTitle;
+        /*$tplData['stories'] = $this->db->getAllIntroductions();*/
 
         ob_start();
         require(DIRECTORY_VIEWS ."/IntroductionTemplate.tpl.php");

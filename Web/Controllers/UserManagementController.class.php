@@ -31,31 +31,50 @@ class UserManagementController implements IController {
         // nazev
         $tplData['title'] = $pageTitle;
 
-        //// neprisel pozadavek na smazani uzivatele?
-        if(isset($_POST['action']) and $_POST['action'] == "delete"
-            and isset($_POST['id_user'])
-        ){
+        //prisel pozadavek na smazani uzivatele?
+        if(isset($_POST['action']) and $_POST['action'] == "delete" and isset($_POST['id_uzivatel'])){
             // provedu smazani uzivatele
-            $ok = $this->db->deleteUser(intval($_POST['id_user']));
+            $ok = $this->db->deleteUser(intval($_POST['id_uzivatel']));
             if($ok){
-                $tplData['delete'] = "OK: Uživatel s ID:$_POST[id_user] byl smazán z databáze.";
+                $tplData['user_action'] = "Uživatel s ID:$_POST[id_uzivatel] byl smazán z databáze.";
             } else {
-                $tplData['delete'] = "CHYBA: Uživatele s ID:$_POST[id_user] se nepodařilo smazat z databáze.";
+                $tplData['user_action'] = "Uživatele s ID:$_POST[id_uzivatel] se nepodařilo smazat z databáze.";
+            }
+        }
+        //prisel pozadavek na promote uzivatele?
+        else if(isset($_POST['action']) and $_POST['action'] == "promote" and isset($_POST['id_uzivatel'])){
+            // provedu povyseni uzivatele
+            $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
+            $ok = $this->db->promoteUser(intval($role), intval($_POST['id_uzivatel']));
+
+            $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
+            $role_name = $this->db->getRoleNameById($role);
+            if($ok){
+                $tplData['user_action'] = "Uživatel s ID:$_POST[id_uzivatel] byl povýšen na roli: $role_name.";
+            } else {
+                $tplData['user_action'] = "Uživatele s ID:$_POST[id_uzivatel] se nepovedlo povýšit.";
+            }
+        }
+        //prisel pozadavek na demote uzivatele?
+        else if(isset($_POST['action']) and $_POST['action'] == "demote"and isset($_POST['id_uzivatel'])){
+            // provedu ponizeni uzivatele
+            $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
+            $ok = $this->db->demoteUser(intval($role), intval($_POST['id_uzivatel']));
+
+            $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
+            $role_name = $this->db->getRoleNameById($role);
+            if($ok){
+                $tplData['user_action'] = "Uživatel s ID:$_POST[id_uzivatel] byl ponížen na roli: $role_name.";
+            } else {
+                $tplData['user_action'] = "Uživatele s ID:$_POST[id_uzivatel] se nepodařilo ponížt.";
             }
         }
 
-        //// nactu aktulani data uzivatelu
         $tplData['users'] = $this->db->getAllUsers();
-
-        //// vypsani prislusne sablony
-        // zapnu output buffer pro odchyceni vypisu sablony
         ob_start();
-        // pripojim sablonu, cimz ji i vykonam
         require(DIRECTORY_VIEWS ."/UserManagementTemplate.tpl.php");
-        // ziskam obsah output bufferu, tj. vypsanou sablonu
         $obsah = ob_get_clean();
 
-        // vratim sablonu naplnenou daty
         return $obsah;
     }
 

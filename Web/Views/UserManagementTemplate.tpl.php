@@ -9,8 +9,8 @@ $tplHeaders = new TemplateBasics();
 <?php
 $tplHeaders->getHTMLHeader($tplData['title']);
 
-if(isset($tplData['delete'])){
-    echo "<div class='alert'>$tplData[delete]</div>";
+if(isset($tplData['user_action'])){
+    echo "<div class='alert'>$tplData[user_action]</div>";
 }
 
 $res = "<table border><tr><th>ID</th><th>Jméno</th><th>Příjmení</th><th>role</th><th>login</th><th>Akce</th></tr>";

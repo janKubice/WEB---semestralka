@@ -23,11 +23,10 @@ class ProfileController implements IController {
         $tplData = [];
         $tplData['title'] = $pageTitle;
 
-        
-        
+        ob_start();
+        require(DIRECTORY_VIEWS ."/User-profileTemplate.tpl.php");
         $obsah = ob_get_clean();
 
-        
         return $obsah;
     }
 

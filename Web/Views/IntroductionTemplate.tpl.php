@@ -9,7 +9,7 @@ $tplHeaders = new TemplateBasics();
 <!-- Vypsani sablony -->
 <?php
 // hlavicka
-$tplData['title'] = 'title';
+$tplData['title'] = 'Hlavní stránka';
 $tplHeaders->getHTMLHeader($tplData['title']);
 
 // paticka
