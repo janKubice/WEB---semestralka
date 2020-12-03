@@ -23,10 +23,13 @@ class ProfileController implements IController {
         $tplData = [];
         $tplData['title'] = $pageTitle;
 
+        $tplData['logged'] = $this->db->isUserLogged();
+        $tplData['user'] = $this->db->getLoggedUserData();
+        
+       
         ob_start();
         require(DIRECTORY_VIEWS ."/User-profileTemplate.tpl.php");
         $obsah = ob_get_clean();
-
         return $obsah;
     }
 

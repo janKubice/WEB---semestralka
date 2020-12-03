@@ -133,6 +133,12 @@ class DatabaseModel {
         }
     }
 
+    public function getAllPosts(){
+        $q = "SELECT * FROM ".TABLE_POST;
+        return $this->pdo->query($q)->fetchAll();
+    }
+
+
     public function userLogin(string $login, string $heslo){
         $where = "login='$login' AND heslo='$heslo'";
         $user = $this->selectFromTable(TABLE_USER, $where);
@@ -151,6 +157,15 @@ class DatabaseModel {
 
     public function isUserLogged(){
         return isset($_SESSION[$this->userSessionKey]);
+    }
+
+    public function getLoggedUserId(){
+        if ($this->isUserLogged()){
+            $id_user = $_SESSION[$this->userSessionKey];
+            return $id_user;
+        }
+        else
+            return null;
     }
 
     public function getLoggedUserData(){
@@ -172,8 +187,7 @@ class DatabaseModel {
             }
         }else{
             return null;
-        }
-        
+        }   
     }
     
 }

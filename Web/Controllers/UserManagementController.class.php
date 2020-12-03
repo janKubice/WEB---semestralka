@@ -30,6 +30,7 @@ class UserManagementController implements IController {
         $tplData = [];
         // nazev
         $tplData['title'] = $pageTitle;
+        $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
 
         //prisel pozadavek na smazani uzivatele?
         if(isset($_POST['action']) and $_POST['action'] == "delete" and isset($_POST['id_uzivatel'])){

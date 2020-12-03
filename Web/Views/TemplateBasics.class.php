@@ -1,13 +1,11 @@
 <?php
-
 /**
- * Trida vypisujici HTML hlavicku a paticku stranky.
+ * Třída starající se o vytvoření hlavičky a patičky
  */
 class TemplateBasics {
 
     /**
-     *  Vrati vrsek stranky az po oblast, ve ktere se vypisuje obsah stranky.
-     *  @param string $pageTitle    Nazev stranky.
+     * Vytvoří hlavičku stránky - menu, logo
      */
     public function getHTMLHeader(string $pageTitle) {
         ?>
@@ -16,22 +14,23 @@ class TemplateBasics {
             <head>
                 <meta charset='utf-8'>
                 <title><?php echo $pageTitle; ?></title>
-                <style>
-                    nav { background-color:orange; padding:10px; }
-                    nav a { margin: 0px 10px; }
-                    footer { padding: 10px; background-color: lightgrey; text-align: center; }
-                    .alert { padding: 10px; background-color: lightblue; font-weight: bold; margin-bottom: 20px; border-radius: 10px; }
-                </style>
+                <link rel="stylesheet" href="http://127.0.0.1:8080/CSS/TemplateBasics.css">
+                <link rel="stylesheet" href="http://127.0.0.1:8080/CSS/Login.css">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
             </head>
             <body>
-                <h1>Template: <?php echo $pageTitle; ?></h1>
-
                 <nav>
                     <?php
                         // vypis menu
+                        echo "<div class=header>";
+                        echo "<a href=#default class=logo>CompanyLogo</a>";
+                        echo "<div class=header-right>";
                         foreach(WEB_PAGES as $key => $pInfo){
                             echo "<a href='index.php?page=$key'>$pInfo[title]</a>";
                         }
+                        echo "</div>
+                        </div>";
+                        
                     ?>
                 </nav>
                 <br>
@@ -39,12 +38,13 @@ class TemplateBasics {
     }
     
     /**
-     *  Vrati paticku stranky.
+     * Vytvoří a vrátí patičku stránky
      */
     public function getHTMLFooter(){
         ?>
-                <br>
-                <footer>Cvičení z KIV/WEB</footer>
+                <div class="footer">
+                    <p>Semestrální práce z KIV/WEB - Jan Kubice</p>
+                </div>
             <body>
         </html>
 

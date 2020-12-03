@@ -23,35 +23,32 @@ class LoginController implements IController {
         $tplData = [];
         $tplData['title'] = $pageTitle;
 
+        if(isset($tplData['reg_suc'])){
+            echo "<div class='info'>$tplData[loginStatus]</div>";
+        }
+
             // zpracovani odeslanych formularu
             if (isset($_POST['action'])){
                 if ($_POST['action'] == 'login' && isset($_POST['login']) && isset($_POST['heslo'])){
                     $res = $this->db->userLogin($_POST['login'], $_POST['heslo']);
                     if ($res)
-                        echo "OK: UZIVATEL LOGGGNUUtý";
+                    {   
+                        $tplData['userRole'] = $this->db->getLoggedUserData();
+                        $tplData['loginStatus'] = "Přihlášení se zdařilo";
+                    }         
                     else
-                        echo "ERROR prihlaseni se nepovedlo";
+                        $tplData['loginStatus'] = "Přihlášení se nezdařilo";
                 }
                 else if ($_POST['action'] == 'logout'){
-                    $db->userLogout();
-                    echo "OK: uzivatel odhlásen";
+                    $this->db->userLogout();
+                    $tplData['userRole'] = -1;
+                    $tplData['loginStatus'] = "Úspěšné odhlášení";
                 }
                 else
-                    echo "NEznámá akce";
-                
-                echo"<br>";
+                    $tplData['loginStatus'] = "Něco se nezdařilo";
             }
 
-
-            ///////////// PRO NEPRIHLASENE UZIVATELE ///////////////
-            if (!$this->db->isUserLogged()){
-                $tplData["logged"] = false;
-            }
-
-            ///////////// KONEC: PRO NEPRIHLASENE UZIVATELE ///////////////
-        else {
-                $tplData["logged"] = true;
-        }
+            $tplData['logged'] = $this->db->isUserLogged();
         
        
         ob_start();

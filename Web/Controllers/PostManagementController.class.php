@@ -1,7 +1,7 @@
 <?php
 require_once(DIRECTORY_CONTROLLERS."/IController.interface.php");
 
-class MainController implements IController {
+class PostManagementController implements IController {
 
     private $db;
 
@@ -22,13 +22,12 @@ class MainController implements IController {
         global $tplData;
         $tplData = [];
         $tplData['title'] = $pageTitle;
-
-        $tplData['posts'] = $this->db->getAllPosts();
-        
+        $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+       
         ob_start();
-        require(DIRECTORY_VIEWS ."/MainTemplate.tpl.php");
+        require(DIRECTORY_VIEWS ."/PostManagementTemplate.tpl.php");
         $obsah = ob_get_clean();
-        return $obsah;  
+        return $obsah;
     }
 
 }

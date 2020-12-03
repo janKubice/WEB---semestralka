@@ -50,6 +50,9 @@ const WEB_PAGES = array(
     "main" => array("file_name" => "MainController.class.php",
                     "class_name" => "MainController",
                     "title" => "Hlavní stránka"),
+    "sprava_post" => array("file_name" => "PostManagementController.class.php",
+                    "class_name" => "PostManagementController",
+                    "title" => "Správa článků"),
 );
 
 /** Klic defaultni webove stranky. */
