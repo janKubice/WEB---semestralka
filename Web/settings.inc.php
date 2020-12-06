@@ -30,11 +30,9 @@ const DIRECTORY_VIEWS = "Views";
 
 /** Dostupne webove stranky. */
 const WEB_PAGES = array(
-    // uvodni stranka
     "title" => array("file_name" => "IntroductionController.class.php",
                     "class_name" => "IntroductionController",
                     "title" => "Úvodní stránka"),
-    // sprava uzivatelu
     "sprava" => array("file_name" => "UserManagementController.class.php",
                     "class_name" => "UserManagementController",
                     "title" => "Správa uživatelů"),
@@ -53,6 +51,9 @@ const WEB_PAGES = array(
     "sprava_post" => array("file_name" => "PostManagementController.class.php",
                     "class_name" => "PostManagementController",
                     "title" => "Správa článků"),
+    "recenze" => array("file_name" => "ReviewsController.class.php",
+                    "class_name" => "ReviewsController",
+                    "title" => "Recenze"),
 );
 
 /** Klic defaultni webove stranky. */

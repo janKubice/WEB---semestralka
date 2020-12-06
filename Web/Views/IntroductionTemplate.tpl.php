@@ -10,7 +10,7 @@ $tplHeaders = new TemplateBasics();
 <?php
 // hlavicka
 $tplData['title'] = 'Hlavní stránka';
-$tplHeaders->getHTMLHeader($tplData['title']);
+$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Introduction.css");
 
 // paticka
 $tplHeaders->getHTMLFooter()

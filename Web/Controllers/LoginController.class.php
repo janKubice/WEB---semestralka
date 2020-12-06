@@ -22,11 +22,7 @@ class LoginController implements IController {
         global $tplData;
         $tplData = [];
         $tplData['title'] = $pageTitle;
-
-        if(isset($tplData['reg_suc'])){
-            echo "<div class='info'>$tplData[loginStatus]</div>";
-        }
-
+        
             // zpracovani odeslanych formularu
             if (isset($_POST['action'])){
                 if ($_POST['action'] == 'login' && isset($_POST['login']) && isset($_POST['heslo'])){

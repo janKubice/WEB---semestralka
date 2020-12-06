@@ -31,17 +31,14 @@ class RegisterController implements IController {
             && $_POST['login'] != "" && $_POST['heslo'] != "" && $_POST['jmeno'] != ""){
                 $res = $this->db->addUser($_POST['jmeno'], $_POST['prijmeni'], $_POST['login'], $_POST['heslo']);
                 if ($res){
-                    unset($tplData['reg_err']);
-                    $tplData['reg_suc'] = "Registrace proběhla v pořádku!";
+                    $tplData['registrationStatus'] = "Registrace proběhla v pořádku!";
                 }
                 else{
-                    unset($tplData['reg_suc']);
-                    $tplData['reg_err'] = "Registrace se nezdařila!";
+                    $tplData['registrationStatus'] = "Registrace se nezdařila!";
                 }
             }
         else
-            unset($tplData['reg_suc']);
-            $tplData['reg_err'] = "Špatné údaje!";
+            $tplData['registrationStatus'] = "Špatné údaje!";
         }
 
        

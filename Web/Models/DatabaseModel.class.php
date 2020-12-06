@@ -24,6 +24,14 @@ class DatabaseModel {
         return $this->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
     }
 
+    public function addPost(string $title, string $text){
+        $userId = $this->getLoggedUserId();
+        $time = date("Y/m/d");
+        $insertStatement = "id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, hodnoceni, UZIVATEL_id_uzivatel";
+        $insertValues = "'NULL', '$time', '$title', '$text', '-1', '0', '0', '$userId'";
+        return $this->insertIntoTable(TABLE_POST, $insertStatement, $insertValues);
+    }
+
     public function promoteUser(int $id_role, int $id_user){
         if ($id_role < 3)
             $id_role++;
@@ -133,11 +141,52 @@ class DatabaseModel {
         }
     }
 
-    public function getAllPosts(){
-        $q = "SELECT * FROM ".TABLE_POST;
-        return $this->pdo->query($q)->fetchAll();
+    public function getAllReviewedPosts(){
+        $posts = $this->selectFromTable(TABLE_POST, "recenzovano=1");
+        return $posts;
     }
 
+    public function getNotReviewPosts(){
+        $posts = $this->selectFromTable(TABLE_POST, "id_recenzent=-1");
+        return $posts;
+    }
+
+    public function getUserPosts(int $idUser){
+        $posts = $this->selectFromTable(TABLE_POST, "UZIVATEL_id_uzivatel=$idUser");
+        return $posts;
+    }
+
+    public function getPostToReviewToUser(int $id_user){
+        $posts = $this->selectFromTable(TABLE_POST, "id_recenzent=$id_user AND recenzovano=0");
+        return $posts;
+    }
+
+    public function getReviewers(){
+        $users = $this->selectFromTable(TABLE_USER, "ROLE_id_role>=2");
+        return $users;
+    }
+
+    public function updatePostStatus(int $idPost, int $status){
+        $updateStatementWithValues = "recenzovano='$status'";
+        $whereStatement = "id_prispevek=$idPost";
+        return $this->updateInTable(TABLE_POST, $updateStatementWithValues, $whereStatement);
+    }
+
+    public function setReviewerToPost(int $post, int $rev){
+        $updateStatementWithValues = "id_recenzent='$rev'";
+        $whereStatement = "id_prispevek=$post";
+        return $this->updateInTable(TABLE_POST, $updateStatementWithValues, $whereStatement);
+    }
+    
+    public function deletePost(int $postId){
+        $q = "DELETE FROM ".TABLE_POST." WHERE id_prispevek = $postId";
+        $res = $this->pdo->query($q);
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function userLogin(string $login, string $heslo){
         $where = "login='$login' AND heslo='$heslo'";

@@ -7,7 +7,7 @@ $tplHeaders = new TemplateBasics();
 ?>
 
 <?php
-$tplHeaders->getHTMLHeader($tplData['title']);
+$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/UserManagement.css");
 
 if(isset($tplData['user_action'])){
     echo "<div class='alert'>$tplData[user_action]</div>";

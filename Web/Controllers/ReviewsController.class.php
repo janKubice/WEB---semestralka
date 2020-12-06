@@ -1,7 +1,7 @@
 <?php
 require_once(DIRECTORY_CONTROLLERS."/IController.interface.php");
 
-class MainController implements IController {
+class ReviewsController implements IController {
 
     private $db;
 
@@ -23,17 +23,21 @@ class MainController implements IController {
         $tplData = [];
         $tplData['title'] = $pageTitle;
 
-        if (isset($_POST['delete']) && $_POST['delete'] == 'Smazat'){
-            $this->db->deletePost($_POST['id_post']);
+        if (isset($_POST['potvrzeni'])){
+            if ($_POST['potvrzeni'] == "Schválit")
+                $this->db->updatePostStatus($_POST['id_post'], 1);
+            else if ($_POST['potvrzeni'] == 'Zamítnout')
+                $this->db->deletePost($_POST['id_post']);
         }
 
         $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
-        $tplData['posts'] = $this->db->getAllReviewedPosts();
-
+        $tplData['posts'] = $this->db->getPostToReviewToUser($this->db->getLoggedUserData()['id_uzivatel']);
+        
         ob_start();
-        require(DIRECTORY_VIEWS ."/MainTemplate.tpl.php");
+        require(DIRECTORY_VIEWS ."/ReviewsTemplate.tpl.php");
         $obsah = ob_get_clean();
-        return $obsah;  
+    
+        return $obsah;
     }
 
 }
