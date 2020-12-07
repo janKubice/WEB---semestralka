@@ -92,6 +92,13 @@ class DatabaseModel {
         return $users[0]['ROLE_id_role'];
     }
 
+    public function getUserRole(int $id_role){
+        $role = $this->selectFromTable(TABLE_ROLE, "id_role=$id_role");
+        if (empty($role))
+            return NULL;
+        return $role[0];
+    }
+
     public function getRoleNameById(int $id_role){
         $users = $this->selectFromTable(TABLE_ROLE, "id_role=$id_role");
         if (empty($users))

@@ -11,19 +11,22 @@ $tplHeaders = new TemplateBasics();
 $tplData['title'] = 'Registrace';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Register.css");
 
-if(isset($tplData['reg_err'])){
-    echo "<div class='alert alert-primary' role='alert'>$tplData[registrationStatus]</div>";
+//Informace o registraci
+if (isset($tplData['registrationStatus'])) {
+    echo "<div class='align-middle alert alert-primary w-25 p-3' role='alert'>$tplData[registrationStatus]</div>";
 }
 
-$res = "<div class='container'><form action='' method='POST'>
-    Login:<input type='text' name='login' required>
-    Heslo:<input type='password' name='heslo' id='pas1' required>
-    Heslo znova:<input type='password' name='heslo2' id='pas2' required>
-    Jméno:<input type='text' name='jmeno' required>
-    Příjmení:<input type='text' name='prijmeni' required>
-
-<input class='btn btn-success btn-block' type='submit' name='action' value='register'>
-</form></div>";
+//vytvoření registračního formuláře
+$res = "<div class='center'>
+            <form class='container' action='' method='POST'>
+                <div><p>Login:</p> <input type='text' placeholder='uživatelské jméno' name='login' required></div>
+                <div><p>Heslo:</p><input type='password' placeholder='heslo' name='heslo' id='pas1' required></br></div>
+                <div><p>Heslo znova:</p><input type='password' placeholder='heslo podruhé' name='heslo2' id='pas2' required></br></div>
+                <div><p>Jméno:</p><input type='text' placeholder='jméno' name='jmeno' required></br></div>
+                <div><p>Příjmení:</p><input type='text' placeholder='přijmení' name='prijmeni' required></br></div>
+                <input class='btn btn-success col-md-4 col-lg-4 col-xl-4 col-sm-4' type='submit' name='action' value='register'>
+            </form>
+        </div></br></br>";
 
 echo $res;
 

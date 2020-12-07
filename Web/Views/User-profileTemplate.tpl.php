@@ -6,24 +6,28 @@ $tplHeaders = new TemplateBasics();
 
 ?>
 
-<!-- Vypsani sablony -->
 <?php
-// hlavicka
 $tplData['title'] = 'Profil';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Profile.css");
 
-if (isset($tplData['releaseStatus'])){
+//vpsání jak dopadlo vydání článku
+if (isset($tplData['releaseStatus'])) {
     echo "<div class='alert alert-primary' role='alert'>$tplData[releaseStatus]</div>";
 }
 
 $res = "";
 
-if ($tplData['logged']){
+//přihlášený uživatel
+if ($tplData['logged']) {
     $u = $tplData['user'];
-    $res .= "<p>$u[jmeno]</p>";
-    $res .= "<p>$u[prijmeni]</p>";
-    $res .= "<p>$u[login]</p>";
-    $res .= "<p>$u[ROLE_id_role]</p>";
+    $r = $tplData['role'];
+    $res .= "<div> 
+                <p>Údaje</p>
+                <p>$u[jmeno]</p>
+                <p>$u[prijmeni]</p>
+                <p>$u[login]</p>
+                <p>$r[nazev]</p>
+            </div>";
 
     $res .= "<div class='jumbotron'><form action='' method='POST'>
         Titulek:<input type='text' name='title' required>
@@ -31,10 +35,10 @@ if ($tplData['logged']){
         <input class='btn btn-success btn-block' type='submit' name='action' value='Vydat'>
         </form></div>";
 
-    if (isset($tplData['posts'])){
+    if (isset($tplData['posts'])) {
         foreach ($tplData['posts'] as $post) {
             $res .= "<h2>$post[nadpis]</h2>";
-            $res .= "<p>$post[datum]</p>"; 
+            $res .= "<p>$post[datum]</p>";
             $res .= "<p>$post[text]</p>";
             $res .= "<p></p>";
             $res .= "<p></p>";
@@ -46,17 +50,15 @@ if ($tplData['logged']){
                 <input class='btn btn-warning' type='submit' name='delete' value='Smazat'>
             </form>
             </div>";
-            
         }
     }
-}
-else{
+} else {
+    //nepřihlášený uživatel
     $res .= "<h2>Pro zobrazení profilu se přihlašte</h2>";
     $res .= "<h2>Pokud nejste registrovaní, vytvořte si profil</h2><a href='index.php?page=register'>Registrovat</a>";
 }
 
 echo $res;
-// paticka
 $tplHeaders->getHTMLFooter()
 
 ?>

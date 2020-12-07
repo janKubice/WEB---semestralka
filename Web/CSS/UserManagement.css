@@ -1,0 +1,14 @@
+.btn-group button {
+  color: white;
+  padding: 10px 24px; 
+  cursor: pointer; 
+  width: 50%; 
+  display: block; 
+}
+
+.btn-group button:not(:last-child) {
+  border-bottom: none;
+}
+
+  
+tr:nth-child(even){background-color: #f2f2f2}
