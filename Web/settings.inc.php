@@ -33,6 +33,9 @@ const WEB_PAGES = array(
     "title" => array("file_name" => "IntroductionController.class.php",
                     "class_name" => "IntroductionController",
                     "title" => "Úvodní stránka"),
+    "main" => array("file_name" => "MainController.class.php",
+                    "class_name" => "MainController",
+                    "title" => "Hlavní stránka"),
     "sprava" => array("file_name" => "UserManagementController.class.php",
                     "class_name" => "UserManagementController",
                     "title" => "Správa uživatelů"),
@@ -45,15 +48,15 @@ const WEB_PAGES = array(
     "login" => array("file_name" => "LoginController.class.php",
                     "class_name" => "LoginController",
                     "title" => "Přihlášení"),
-    "main" => array("file_name" => "MainController.class.php",
-                    "class_name" => "MainController",
-                    "title" => "Hlavní stránka"),
     "sprava_post" => array("file_name" => "PostManagementController.class.php",
                     "class_name" => "PostManagementController",
                     "title" => "Správa článků"),
     "recenze" => array("file_name" => "ReviewsController.class.php",
                     "class_name" => "ReviewsController",
                     "title" => "Recenze"),
+    "clanek" => array("file_name" => "PostController.class.php",
+                    "class_name" => "PostController",
+                    "title" => "Článek"),
 );
 
 /** Klic defaultni webove stranky. */

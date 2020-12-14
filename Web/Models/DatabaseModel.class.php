@@ -24,11 +24,12 @@ class DatabaseModel {
         return $this->insertIntoTable(TABLE_USER, $insertStatement, $insertValues);
     }
 
-    public function addPost(string $title, string $text){
+    public function addPost(string $title, string $text, string $cesta){
         $userId = $this->getLoggedUserId();
+        echo $cesta;
         $time = date("Y/m/d");
-        $insertStatement = "id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, hodnoceni, UZIVATEL_id_uzivatel";
-        $insertValues = "'NULL', '$time', '$title', '$text', '-1', '0', '0', '$userId'";
+        $insertStatement = "id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, hodnoceni, UZIVATEL_id_uzivatel, cesta";
+        $insertValues = "'NULL', '$time', '$title', '$text', '-1', '0', '0', '$userId', '$cesta'";
         return $this->insertIntoTable(TABLE_POST, $insertStatement, $insertValues);
     }
 
@@ -100,10 +101,17 @@ class DatabaseModel {
     }
 
     public function getRoleNameById(int $id_role){
-        $users = $this->selectFromTable(TABLE_ROLE, "id_role=$id_role");
-        if (empty($users))
+        $role = $this->selectFromTable(TABLE_ROLE, "id_role=$id_role");
+        if (empty($role))
             return NULL;
-        return $users[0]['nazev'];
+        return $role[0]['nazev'];
+    }
+
+    public function getPostById(int $id_post){
+        $post = $this->selectFromTable(TABLE_POST, "id_prispevek=$id_post");
+        if (empty($post))
+            return NULL;
+        return $post[0];
     }
 
     public function updateInTable(string $tableName, string $updateStatementWithValues, string $whereValue):bool{
@@ -132,6 +140,11 @@ class DatabaseModel {
         $q = "SELECT * FROM ".TABLE_USER;
         return $this->pdo->query($q)->fetchAll();
     }
+
+    public function getAllRoles():array{
+        $q = "SELECT * FROM ".TABLE_ROLE;
+        return $this->pdo->query($q)->fetchAll();
+    }
     
     /**
      *  Smaze daneho uzivatele z DB.
@@ -149,7 +162,7 @@ class DatabaseModel {
     }
 
     public function getAllReviewedPosts(){
-        $posts = $this->selectFromTable(TABLE_POST, "recenzovano=1");
+        $posts = $this->selectFromTable(TABLE_POST, "recenzovano=1", "id_prispevek DESC");
         return $posts;
     }
 
@@ -159,7 +172,7 @@ class DatabaseModel {
     }
 
     public function getUserPosts(int $idUser){
-        $posts = $this->selectFromTable(TABLE_POST, "UZIVATEL_id_uzivatel=$idUser");
+        $posts = $this->selectFromTable(TABLE_POST, "UZIVATEL_id_uzivatel=$idUser", "id_prispevek DESC");
         return $posts;
     }
 

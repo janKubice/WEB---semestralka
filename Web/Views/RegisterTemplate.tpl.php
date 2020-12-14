@@ -9,7 +9,7 @@ $tplHeaders = new TemplateBasics();
 <?php
 // hlavicka
 $tplData['title'] = 'Registrace';
-$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Register.css");
+$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Register.css", $tplData['logged'], $tplData['userRole']);
 
 //Informace o registraci
 if (isset($tplData['registrationStatus'])) {

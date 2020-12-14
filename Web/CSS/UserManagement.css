@@ -10,5 +10,9 @@
   border-bottom: none;
 }
 
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
   
 tr:nth-child(even){background-color: #f2f2f2}

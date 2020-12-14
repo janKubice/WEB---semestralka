@@ -1,0 +1,11 @@
+.openPost {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}

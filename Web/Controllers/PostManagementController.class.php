@@ -47,7 +47,7 @@ class PostManagementController implements IController
 
         $tplData['posts'] = $this->db->getNotReviewPosts();
         $tplData['reviewers'] = $this->db->getReviewers();
-            
+        $tplData['logged'] = $this->db->isUserLogged();
         ob_start();
         require(DIRECTORY_VIEWS ."/PostManagementTemplate.tpl.php");
         $obsah = ob_get_clean();

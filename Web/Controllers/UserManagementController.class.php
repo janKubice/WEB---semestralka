@@ -64,7 +64,6 @@ class UserManagementController implements IController
             // provedu ponizeni uzivatele
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
             $ok = $this->db->demoteUser(intval($role), intval($_POST['id_uzivatel']));
-
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
             $role_name = $this->db->getRoleNameById($role);
             
@@ -78,6 +77,9 @@ class UserManagementController implements IController
         //načtu všechny uživatele
         $tplData['users'] = $this->db->getAllUsers();
 
+        $tplData['roles'] = $this->db->getAllRoles();
+        $tplData['logged'] = $this->db->isUserLogged();
+        
         ob_start();
         require(DIRECTORY_VIEWS ."/UserManagementTemplate.tpl.php");
         $obsah = ob_get_clean();

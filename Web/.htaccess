@@ -1,0 +1,8 @@
+ErrorDocument 404 /web_sp/Web/HTML/chybovaStranka.html
+
+DirectoryIndex index.php
+
+
+RewriteEngine on
+Options +FollowSymlinks
+RewriteBase /

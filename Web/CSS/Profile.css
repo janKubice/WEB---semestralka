@@ -1,0 +1,75 @@
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.post {
+  border-radius: 1px;
+  border-color: gray;
+}
+
+.postWriting {
+  width: 70%;
+}
+
+.textLeft {
+  padding-left: 10%;
+}
+
+.divLeft {
+  width: 15%;
+}
+
+textarea {
+  outline: none;
+}
+
+.newPostText{
+  font-weight: bold;
+  background-color: darkgray;
+}
+
+table{
+  width: 70%;
+}
+
+tr:nth-child(even){background-color: rgb(182, 182, 182)}
+
+.deleteButton{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.boldText{
+  font-weight: bold;
+  font-size: 45px;
+}
+
+.openPost{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.commentIcon{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.statusText{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.regBtn {
+  background-color: #65b369;
+  color: white;
+  display: inline-block;
+}
+
+.regBtn:hover {
+  background-color: rgb(16, 202, 78);
+}

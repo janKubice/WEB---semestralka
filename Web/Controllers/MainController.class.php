@@ -22,14 +22,21 @@ class MainController implements IController {
         global $tplData;
         $tplData = [];
         $tplData['title'] = $pageTitle;
+        $user = $this->db->getLoggedUserData();
+        $tplData['user'] = $user;
 
         if (isset($_POST['delete']) && $_POST['delete'] == 'Smazat'){
             $this->db->deletePost($_POST['id_post']);
         }
 
-        $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
-        $tplData['posts'] = $this->db->getAllReviewedPosts();
-
+        $tplData['logged'] = $this->db->isUserLogged();
+        if ($tplData['logged']) {
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+            $tplData['posts'] = $this->db->getAllReviewedPosts();
+        }else{
+            $tplData['userRole'] = -1;
+        }
+        
         ob_start();
         require(DIRECTORY_VIEWS ."/MainTemplate.tpl.php");
         $obsah = ob_get_clean();

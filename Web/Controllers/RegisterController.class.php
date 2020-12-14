@@ -43,6 +43,12 @@ class RegisterController implements IController
             }
         }
      
+        $tplData['logged'] = $this->db->isUserLogged();
+        if ($tplData['logged']) {
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+        }else{
+            $tplData['userRole'] = -1;
+        }
         ob_start();
         require(DIRECTORY_VIEWS ."/RegisterTemplate.tpl.php");
         $obsah = ob_get_clean();

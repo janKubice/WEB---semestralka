@@ -24,7 +24,12 @@ class IntroductionController implements IController {
         global $tplData;
         $tplData = [];
         $tplData['title'] = $pageTitle;
-        /*$tplData['stories'] = $this->db->getAllIntroductions();*/
+        $tplData['logged'] = $this->db->isUserLogged();
+        if ($tplData['logged']) {
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+        }else{
+            $tplData['userRole'] = -1;
+        }
 
         ob_start();
         require(DIRECTORY_VIEWS ."/IntroductionTemplate.tpl.php");

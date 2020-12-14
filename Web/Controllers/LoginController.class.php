@@ -23,30 +23,34 @@ class LoginController implements IController {
         $tplData = [];
         $tplData['title'] = $pageTitle;
         
-            // zpracovani odeslanych formularu
-            if (isset($_POST['action'])){
-                if ($_POST['action'] == 'login' && isset($_POST['login']) && isset($_POST['heslo'])){
-                    $res = $this->db->userLogin($_POST['login'], $_POST['heslo']);
-                    if ($res)
-                    {   
-                        $tplData['userRole'] = $this->db->getLoggedUserData();
-                        $tplData['loginStatus'] = "Přihlášení se zdařilo";
-                    }         
-                    else
-                        $tplData['loginStatus'] = "Přihlášení se nezdařilo";
-                }
-                else if ($_POST['action'] == 'logout'){
-                    $this->db->userLogout();
-                    $tplData['userRole'] = -1;
-                    $tplData['loginStatus'] = "Úspěšné odhlášení";
-                }
+        // zpracovani odeslanych formularu
+        if (isset($_POST['action'])){
+            if ($_POST['action'] == 'login' && isset($_POST['login']) && isset($_POST['heslo'])){
+                $res = $this->db->userLogin($_POST['login'], $_POST['heslo']);
+                if ($res)
+                {   
+                    $tplData['userRole'] = $this->db->getLoggedUserData();
+                    $tplData['loginStatus'] = "Přihlášení se zdařilo";
+                }         
                 else
-                    $tplData['loginStatus'] = "Něco se nezdařilo";
+                    $tplData['loginStatus'] = "Přihlášení se nezdařilo";
             }
+            else if ($_POST['action'] == 'logout'){
+                $this->db->userLogout();
+                $tplData['userRole'] = -1;
+                $tplData['loginStatus'] = "Úspěšné odhlášení";
+            }
+            else
+                $tplData['loginStatus'] = "Něco se nezdařilo";
+        }
 
-            $tplData['logged'] = $this->db->isUserLogged();
-        
-       
+        $tplData['logged'] = $this->db->isUserLogged();
+        if ($tplData['logged']) {
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+        }else{
+            $tplData['userRole'] = -1;
+        }
+
         ob_start();
         require(DIRECTORY_VIEWS ."/LoginTemplate.tpl.php");
         $obsah = ob_get_clean();
