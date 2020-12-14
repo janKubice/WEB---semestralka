@@ -4,30 +4,32 @@ require_once(DIRECTORY_CONTROLLERS."/IController.interface.php");
 /**
  * Ovladac zajistujici vypsani uvodni stranky.
  */
-class IntroductionController implements IController {
+class IntroductionController implements IController
+{
     private $db;
 
-    /**
-     * Inicializace pripojeni k databazi.
-     */
-    public function __construct() {
-        require_once (DIRECTORY_MODELS ."/DatabaseModel.class.php");
+    public function __construct()
+    {
+        require_once(DIRECTORY_MODELS ."/DatabaseModel.class.php");
         $this->db = new DatabaseModel();
     }
 
     /**
-     * Vrati obsah uvodni stranky.
-     * @param string $pageTitle     Nazev stranky.
-     * @return string               Vypis v sablone.
+     * vrátí obsah úvodní stránky.
+     * @param string $pageTitle     název stránky.
+     * @return string               šablona stránky.
      */
-    public function show(string $pageTitle):string {
+    public function show(string $pageTitle):string
+    {
         global $tplData;
-        $tplData = [];
+
         $tplData['title'] = $pageTitle;
         $tplData['logged'] = $this->db->isUserLogged();
+
+        //zjištění a uložení role
         if ($tplData['logged']) {
             $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
-        }else{
+        } else {
             $tplData['userRole'] = -1;
         }
 
@@ -37,7 +39,4 @@ class IntroductionController implements IController {
 
         return $obsah;
     }
-    
 }
-
-?>

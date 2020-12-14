@@ -8,9 +8,6 @@ class UserManagementController implements IController
 {
     private $db;
 
-    /**
-     * Inicializace pripojeni k databazi.
-     */
     public function __construct()
     {
         require_once(DIRECTORY_MODELS ."/DatabaseModel.class.php");
@@ -18,18 +15,14 @@ class UserManagementController implements IController
     }
 
     /**
-     * Vrati obsah stranky se spravou uzivatelu.
-     * @param string $pageTitle     Nazev stranky.
-     * @return string               Vypis v sablone.
+     * vrátí obsah se správou členů
+     * @param string $pageTitle     název stránky.
+     * @return string               šablona stránky.
      */
     public function show(string $pageTitle):string
     {
         global $tplData;
-        $tplData = [];
-
-        $tplData['title'] = $pageTitle;
-
-        
+        $tplData['title'] = $pageTitle;        
 
         //prisel pozadavek na smazani uzivatele?
         if (isset($_POST['action']) and $_POST['action'] == "delete" and isset($_POST['id_uzivatel'])) {
@@ -47,6 +40,7 @@ class UserManagementController implements IController
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
             $ok = $this->db->promoteUser(intval($role), intval($_POST['id_uzivatel']));
 
+            //získání nových údajů
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
             $role_name = $this->db->getRoleNameById($role);
 
@@ -61,6 +55,8 @@ class UserManagementController implements IController
             // provedu ponizeni uzivatele
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
             $ok = $this->db->demoteUser(intval($role), intval($_POST['id_uzivatel']));
+
+            //získání nových údajů
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
             $role_name = $this->db->getRoleNameById($role);
             
@@ -70,6 +66,7 @@ class UserManagementController implements IController
                 $tplData['user_action'] = "Uživatele s ID:$_POST[id_uzivatel] se nepodařilo ponížt.";
             }
         }
+        //---konec požadavků
 
         //zjištění role uživatele
         if ($this->db->isUserLogged()) {
@@ -78,8 +75,9 @@ class UserManagementController implements IController
 
         //načtu všechny uživatele
         $tplData['users'] = $this->db->getAllUsers();
-
+        //role
         $tplData['roles'] = $this->db->getAllRoles();
+        
         $tplData['logged'] = $this->db->isUserLogged();
         
         ob_start();

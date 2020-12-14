@@ -18,9 +18,6 @@ if (isset($tplData['deleteStatus'])) {
     echo "<div class='alert alert-primary center col-md-6 col-sm-6' role='alert'>$tplData[deleteStatus]</div>";
 }
 
-if (isset($tplData['uploadStatus'])){
-    echo "<div class='alert alert-primary center col-md-6 col-sm-6' role='alert'>$tplData[uploadStatus]</div>";
-}
 
 $res = "";
 

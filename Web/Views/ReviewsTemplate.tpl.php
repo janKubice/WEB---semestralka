@@ -11,6 +11,10 @@ $tplHeaders = new TemplateBasics();
 $tplData['title'] = 'Recenze';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Reviews.css", $tplData['logged'], $tplData['userRole']);
 
+if (isset($tplData['status'])) {
+    echo "<div class='alert alert-primary center col-md-6 col-sm-6' role='alert'>$tplData[status]</div>";
+}
+
 $res = "";
 if (isset($tplData['userRole'])) {
     if ($tplData['userRole'] < 2) {

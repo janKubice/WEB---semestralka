@@ -1,40 +1,38 @@
 <?php
 require_once(DIRECTORY_CONTROLLERS."/IController.interface.php");
 
-class PostController implements IController {
-
+class PostController implements IController
+{
     private $db;
 
-    /**
-     * Inicializace pripojeni k databazi.
-     */
-    public function __construct() {
-        require_once (DIRECTORY_MODELS ."/DatabaseModel.class.php");
+    public function __construct()
+    {
+        require_once(DIRECTORY_MODELS ."/DatabaseModel.class.php");
         $this->db = new DatabaseModel();
     }
 
     /**
-     * Vrati obsah stranky se spravou uzivatelu.
-     * @param string $pageTitle     Nazev stranky.
-     * @return string               Vypis v sablone.
+     * vrátí obsah s jedním příspěvkem.
+     * @param string $pageTitle     název stránky.
+     * @return string               šablona stránky.
      */
-    public function show(string $pageTitle):string {
+    public function show(string $pageTitle):string
+    {
         global $tplData;
 
-        if (isset($_POST['postID'])){
+        //požadavek na článek
+        if (isset($_POST['postID'])) {
             $post = $this->db->getPostById(intval($_POST['postID']));
             $tplData['title'] = $post['nadpis'];
             $tplData['post'] = $post;
-            
         }
-        
-        $user = $this->db->getLoggedUserData();
-        $tplData['user'] = $user;
 
+        //zjištění a uložení role uživatele
         $tplData['logged'] = $this->db->isUserLogged();
-        if ($this->db->isUserLogged()){
+        if ($this->db->isUserLogged()) {
             $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
-        }else {
+            $tplData['user'] = $this->db->getLoggedUserData();
+        } else {
             $tplData['userRole'] = -1;
         }
         
@@ -43,7 +41,4 @@ class PostController implements IController {
         $obsah = ob_get_clean();
         return $obsah;
     }
-
 }
-
-?>

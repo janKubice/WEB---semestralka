@@ -11,6 +11,9 @@ $tplData['title'] = 'Správa článků';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/PostManagement.css", $tplData['logged'], $tplData['userRole']);
 $res = "";
 
+if(isset($tplData['status'])){
+    echo "<div class='center alert alert-danger col-md-6 col-sm-6'>$tplData[status]</div>";
+}
 
 if (isset($tplData['userRole'])) {
     if ($tplData['userRole'] != 3) {
