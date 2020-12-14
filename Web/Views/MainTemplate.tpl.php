@@ -25,7 +25,7 @@ if (isset($tplData['posts'])) {
 
         if (strlen($post['cesta']) > 0){
             $name = str_replace("Uploads/", "", $post['cesta']);
-            $res .= "<a href=$post[cesta] download=$name>Stáhnout přiložený soubor</a>";
+            $res .= "<a href=$post[cesta] download=$name>Stáhnout přiložený soubor</a></br>";
         }
 
         if (isset($tplData['user']) && ($user['ROLE_id_role'] == 3 || $user['id_uzivatel'] == $post['UZIVATEL_id_uzivatel'])) {
