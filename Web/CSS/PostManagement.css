@@ -1,12 +1,12 @@
 .center {
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  table {
-    width: 100%;
-  }
+  margin: 0 auto;
+  text-align: center;
+}
 
-  table tr{
-      background-color: azure;
-  }
+table {
+  width: 100%;
+}
+
+table tr {
+  background-color: azure;
+}

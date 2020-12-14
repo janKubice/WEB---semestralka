@@ -24,41 +24,43 @@ textarea {
   outline: none;
 }
 
-.newPostText{
+.newPostText {
   font-weight: bold;
   background-color: darkgray;
 }
 
-table{
+table {
   width: 70%;
 }
 
-tr:nth-child(even){background-color: rgb(182, 182, 182)}
+tr:nth-child(even) {
+  background-color: rgb(182, 182, 182);
+}
 
-.deleteButton{
+.deleteButton {
   position: absolute;
   top: 20px;
   right: 20px;
 }
 
-.boldText{
+.boldText {
   font-weight: bold;
   font-size: 45px;
 }
 
-.openPost{
+.openPost {
   position: absolute;
   bottom: 20px;
   left: 20px;
 }
 
-.commentIcon{
+.commentIcon {
   position: absolute;
   bottom: 20px;
   left: 20px;
 }
 
-.statusText{
+.statusText {
   position: absolute;
   top: 20px;
   left: 20px;
