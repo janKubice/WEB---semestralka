@@ -30,34 +30,47 @@ class TemplateBasics
                         echo "<a href='index.php?page=title' class=logo>MyBlogSpace</a>";
                         echo "<div class=header-right>";
                         foreach (WEB_PAGES as $key => $pInfo) {
-                            //nefungovalo mi zde if ($key == 'neco') || ($key == 'neco') ....
-                            //vyřešeno takto
+                            //přihlášený uživatel
                             if ($logedStatus == 1){
-                                if ($key == 'clanek'){
-                                    continue;
-                                }
                                 if ($key == 'register'){
                                     continue;
                                 }
-                                else if($key == 'login'){
+                                if ($key == 'login'){
                                     echo "<a href='index.php?page=$key'>Odhlásit</a>";
-                                } else{
-                                    echo "<a href='index.php?page=$key'>$pInfo[title]</a>";
+                                    continue;
+                                }
+                                //má roli autora
+                                if ($role == 1) {
+                                    if ($key == 'clanek' || $key == 'sprava' || $key == 'sprava_post' 
+                                        || $key == 'recenze') {
+                                        continue;
+                                    }
+                                    else {
+                                        echo "<a href='index.php?page=$key'>$pInfo[title]</a>";
+                                    }
+                                }
+                                //má roli recenzenta
+                                else if ($role == 2) {
+                                    if ($key == 'sprava' || $key == 'sprava_post' || $key == 'clanek') {
+                                        continue;
+                                    }
+                                    else {
+                                        echo "<a href='index.php?page=$key'>$pInfo[title]</a>";
+                                    }
+                                }
+                                //má roli admina
+                                else {
+                                    if ($key == 'clanek') {
+                                        continue;
+                                    }else {
+                                        echo "<a href='index.php?page=$key'>$pInfo[title]</a>";
+                                    }
+                                    
                                 }
                             }else{
-                                if ($key == 'clanek'){
-                                    continue;
-                                }
-                                else if ($key == 'sprava'){
-                                    continue;
-                                }
-                                else if ($key == 'recenze'){
-                                    continue;
-                                }
-                                else if ($key == 'sprava_post'){
-                                    continue;
-                                }
-                                else if ($key == 'profil'){
+                                //nepřihlášený
+                                if ($key == 'clanek' || $key == 'sprava' || $key == 'recenze' || $key == 'sprava_post' 
+                                    || $key == 'profil' ){
                                     continue;
                                 }
                                 else{

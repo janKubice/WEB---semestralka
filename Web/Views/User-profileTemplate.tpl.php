@@ -8,7 +8,7 @@ $tplHeaders = new TemplateBasics();
 
 <?php
 $tplData['title'] = 'Profil';
-$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Profile.css", $tplData['logged'], $tplData['role']);
+$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Profile.css", $tplData['logged'], $tplData['userRole']);
 
 //vpsání jak dopadlo vydání článku
 if (isset($tplData['releaseStatus'])) {

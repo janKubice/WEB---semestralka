@@ -34,6 +34,12 @@ class ReviewsController implements IController {
         $tplData['posts'] = $this->db->getPostToReviewToUser($this->db->getLoggedUserData()['id_uzivatel']);
         $tplData['logged'] = $this->db->isUserLogged();
         
+        if ($tplData['logged']) {
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+        }else{
+            $tplData['userRole'] = -1;
+        }
+
         ob_start();
         require(DIRECTORY_VIEWS ."/ReviewsTemplate.tpl.php");
         $obsah = ob_get_clean();

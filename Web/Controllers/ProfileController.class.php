@@ -65,13 +65,13 @@ class ProfileController implements IController
        
         //pokud je uživatel přihlášený načtou se jeho data
         if ($this->db->isUserLogged()) {
-            $tplData['logged'] = $this->db->isUserLogged();
             $tplData['user'] = $this->db->getLoggedUserData();
             $tplData['role'] = $this->db->getUserRole(intval($tplData['user']['ROLE_id_role']));
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
             $tplData['posts'] = $this->db->getUserPosts($tplData['user']['id_uzivatel']);
         }
         else {
-            $tplData['role'] = -1;
+            $tplData['userRole'] = -1;
         }
         
         $tplData['logged'] = $this->db->isUserLogged();

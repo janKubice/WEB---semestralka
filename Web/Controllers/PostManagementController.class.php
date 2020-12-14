@@ -26,6 +26,8 @@ class PostManagementController implements IController
         $tplData['title'] = $pageTitle;
         if ($this->db->isUserLogged()) {
             $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+        }else {
+            $tplData['userRole'] = -1;
         }
     
 

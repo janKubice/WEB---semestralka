@@ -20,12 +20,23 @@ class PostController implements IController {
      */
     public function show(string $pageTitle):string {
         global $tplData;
-        $post = $this->db->getPostById(intval($_POST['postID']));
+
+        if (isset($_POST['postID'])){
+            $post = $this->db->getPostById(intval($_POST['postID']));
+            $tplData['title'] = $post['nadpis'];
+            $tplData['post'] = $post;
+            
+        }
+        
         $user = $this->db->getLoggedUserData();
-        $tplData['title'] = $post['nadpis'];
-        $tplData['post'] = $post;
         $tplData['user'] = $user;
+
         $tplData['logged'] = $this->db->isUserLogged();
+        if ($this->db->isUserLogged()){
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
+        }else {
+            $tplData['userRole'] = -1;
+        }
         
         ob_start();
         require(DIRECTORY_VIEWS ."/PostTemplate.tpl.php");

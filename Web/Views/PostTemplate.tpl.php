@@ -9,7 +9,11 @@ $tplHeaders = new TemplateBasics();
 <!-- Vypsani sablony -->
 <?php
 // hlavicka
-$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Post.css", $tplData['logged'], $tplData['user']['ROLE_id_role']);
+if (!isset($tplData['title'])){
+    $tplData['title'] = "Nenalázá se zde žádný článek";
+}
+
+$tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Post.css", $tplData['logged'], $tplData['userRole']);
 $res = "";
 
 if (isset($tplData['post'])){
@@ -32,7 +36,7 @@ if (isset($tplData['post'])){
         </div></div>";
     }     
 }else{
-    $res .= "<div class='alert'>Nenachází se zde žádný článek</div>";
+    $res .= "<div class='center container alert alert-primary col-md-6 col-sm-6'>Nenachází se zde žádný článek</div>";
 }
 
 

@@ -29,10 +29,7 @@ class UserManagementController implements IController
 
         $tplData['title'] = $pageTitle;
 
-        //zjištění role uživatele
-        if ($this->db->isUserLogged()) {
-            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
-        }
+        
 
         //prisel pozadavek na smazani uzivatele?
         if (isset($_POST['action']) and $_POST['action'] == "delete" and isset($_POST['id_uzivatel'])) {
@@ -72,6 +69,11 @@ class UserManagementController implements IController
             } else {
                 $tplData['user_action'] = "Uživatele s ID:$_POST[id_uzivatel] se nepodařilo ponížt.";
             }
+        }
+
+        //zjištění role uživatele
+        if ($this->db->isUserLogged()) {
+            $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
         }
 
         //načtu všechny uživatele

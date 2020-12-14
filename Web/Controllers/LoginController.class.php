@@ -29,7 +29,7 @@ class LoginController implements IController {
                 $res = $this->db->userLogin($_POST['login'], $_POST['heslo']);
                 if ($res)
                 {   
-                    $tplData['userRole'] = $this->db->getLoggedUserData();
+                    $tplData['userRole'] = $this->db->getLoggedUserData()['ROLE_id_role'];
                     $tplData['loginStatus'] = "Přihlášení se zdařilo";
                 }         
                 else
