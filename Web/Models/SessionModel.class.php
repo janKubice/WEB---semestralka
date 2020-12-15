@@ -1,27 +1,32 @@
 <?php
-class SessionModel{
-    
-    
-    public function __construct(){
+/**
+ * Třída pracující se session
+ */
+class SessionModel
+{
+    public function __construct()
+    {
         session_start();
     }
     
     /**
-     *  Funkce pro ulozeni hodnoty do session.
-     *  @param string $name     Jmeno atributu.
-     *  @param mixed $value    Hodnota
+     *  uloží hodnotu do session.
+     *  @param string $name     jméno.
+     *  @param mixed $value    hodnota
      */
-    public function addSession($name, $value){
+    public function addSession($name, $value)
+    {
         $_SESSION[$name] = $value;
     }
     
     /**
-     *  Vrati hodnotu dane session nebo null, pokud session neni nastavena.
-     *  @param string $name Jmeno atributu.
-     *  @return mixed
+     *  vrátí požadovanou hodnotu v session.
+     *  @param string $name jméno atributu.
+     *  @return mixed hodnotu a nebo NULL pokud není nastavena session
      */
-    public function readSession($name){
-        if($this->isSessionSet($name)){
+    public function readSession($name)
+    {
+        if ($this->isSessionSet($name)) {
             return $_SESSION[$name];
         } else {
             return null;
@@ -29,21 +34,21 @@ class SessionModel{
     }
     
     /**
-     *  Je session nastavena?
-     *  @param string $name  Jmeno atributu.
-     *  @return boolean
+     *  zjistí zda je v session nastaven
+     *  @param string $name  jméno atributu.
+     *  @return boolean true - je nastavena jinak false
      */
-    public function isSessionSet($name){
+    public function isSessionSet($name)
+    {
         return isset($_SESSION[$name]);
     }
 
     /**
-     *  Odstrani danou session.
-     *  @param string $name Jmeno atributu.
+     *  odstraní session
+     *  @param string $name jméno atributu.
      */
-    public function removeSession($name){
+    public function removeSession($name)
+    {
         unset($_SESSION[$name]);
     }
-    
 }
-?>

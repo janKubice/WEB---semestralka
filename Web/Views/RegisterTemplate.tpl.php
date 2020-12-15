@@ -7,7 +7,7 @@ $tplHeaders = new TemplateBasics();
 ?>
 
 <?php
-// hlavicka
+// hlavička
 $tplData['title'] = 'Registrace';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Register.css", $tplData['logged'], $tplData['userRole']);
 
@@ -30,7 +30,7 @@ $res = "<div class='center'>
 
 echo $res;
 
-// paticka
+// patička
 $tplHeaders->getHTMLFooter()
 
 ?>

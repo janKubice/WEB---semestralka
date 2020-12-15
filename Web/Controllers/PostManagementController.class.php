@@ -42,8 +42,6 @@ class PostManagementController implements IController
             } else {
                 $tplData['status'] = "Něco se pokazilo při vybírání recenzenta";
             }
-        }else{
-            $tplData['status'] = "Požadavek nebyl rozpoznán";
         }
 
         $tplData['posts'] = $this->db->getNotReviewPosts();

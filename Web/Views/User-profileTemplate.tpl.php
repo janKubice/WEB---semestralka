@@ -14,6 +14,7 @@ $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Profile
 if (isset($tplData['releaseStatus'])) {
     echo "<div class='alert alert-primary center col-md-6 col-sm-6' role='alert'>$tplData[releaseStatus]</div>";
 }
+//vypsání jak dopadlo smazání článku
 if (isset($tplData['deleteStatus'])) {
     echo "<div class='alert alert-primary center col-md-6 col-sm-6' role='alert'>$tplData[deleteStatus]</div>";
 }
@@ -25,21 +26,22 @@ $res = "";
 if ($tplData['logged']) {
     $u = $tplData['user'];
     $r = $tplData['role'];
+    
     //údaje
     $res .= "<div class='col-md-6 col-sm-6 center'> 
             <p class='boldText'>Vaše údaje</p></br>
             <table class='center col-md-6 col-sm-6 jumbotron'>
                 <tr>
                     <td>Jméno: </td>
-                    <td>$u[jmeno]</td>
+                    <td>" . htmlspecialchars($u['jmeno']) . "</td>
                 </tr>
                 <tr>
                     <td>Příjmení: </td>
-                    <td>$u[prijmeni]</td>
+                    <td>" . htmlspecialchars($u['prijmeni']) . "</td>
                 </tr>
                 <tr>
                     <td>Přezdívka: </td>
-                    <td>$u[login]</td>
+                    <td>" . htmlspecialchars($u['login']) . "</td>
                 </tr>
                 <tr>
                     <td>Role: </td>
@@ -83,18 +85,18 @@ if ($tplData['logged']) {
                     $res .= "<p class='text-danger'>ještě neschváleno</p>";
                 }
             }
-            //prispevek nema recenzenta
+            //příspěvěk nemu recenzenta
             else {
                 $res .= "<p class='text-primary'>čeká na přiřazení</p>";
             }
             $res .= "</div>";
             $res .= "<i style='cursor: pointer;' onclick='openPost($post[id_prispevek])' class='fa fa-external-link openPost' style='font-size:48px;'></i>
-                    <h2>$post[nadpis]</h2>
+                    <h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                     <p><i class='fa fa-calendar'></i> $post[datum]</p>
-                    <p>$post[text]</p>";
+                    <p>" . htmlspecialchars($post['text']) . "</p>";
             if (strlen($post['cesta']) > 0){
                 $name = str_replace("Uploads/", "", $post['cesta']);
-                $res .= "<a href=$post[cesta] download=$name>Stáhnout přiložený soubor</a>";
+                $res .= "<a href=" . htmlspecialchars($post['cesta']) . " download=" . htmlspecialchars($name) . ">Stáhnout přiložený soubor</a>";
             }
             $res .= "</div>";
             
@@ -106,27 +108,30 @@ if ($tplData['logged']) {
                 <h2>Pro zobrazení profilu se přihlašte</h2> 
                 <h2>Pokud nemáte účet, můžete si jeden zdarma vytvořit:
                 <a class='regBtn' href='index.php?page=register'>Registrovat</a></h2> 
-            </div>";
+            </div></br></br>";
 }
 echo $res;
-echo '</br></br>';
+
+//patička
 $tplHeaders->getHTMLFooter()
 
 ?>
 
 <script>
+    //otevře článek v novém okně
     function openPost(postID){
         openWindowWithPost("index.php?page=clanek", {
             postID: postID,
         });
     }
 
+    //otevře nové okno s url a post daty
     function openWindowWithPost(url, data) {
-    var form = document.createElement("form");
-    form.target = "_blank";
-    form.method = "POST";
-    form.action = url;
-    form.style.display = "none";
+        var form = document.createElement("form");
+        form.target = "_blank";
+        form.method = "POST";
+        form.action = url;
+        form.style.display = "none";
 
         for (var key in data) {
             var input = document.createElement("input");
@@ -136,11 +141,12 @@ $tplHeaders->getHTMLFooter()
             form.appendChild(input);
         }
 
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
     }
 
+    //CKeditor script
     ClassicEditor
         .create( document.querySelector( '#editor' ) )
         .catch( error => {

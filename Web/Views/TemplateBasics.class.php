@@ -25,7 +25,7 @@ class TemplateBasics
             <body>
                 <nav>
                     <?php
-                        // vypis menu
+                        // výpis menu
                         echo "<div class=header>";
                         echo "<a href='index.php?page=title' class=logo>MyBlogSpace</a>";
                         echo "<div class=header-right>";
