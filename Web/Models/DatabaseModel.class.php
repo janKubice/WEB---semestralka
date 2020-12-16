@@ -134,7 +134,7 @@ class DatabaseModel
      *  @param int   $id_user  id uživatele
      *  @return int     id role uživatele
      */
-    public function getUserRoleId(int $id_user):int
+    public function getUserRoleId(int $id_user)
     {
         if($stmt = $this->pdo->prepare("SELECT ROLE_id_role FROM ".TABLE_USER." WHERE id_uzivatel=?")) {
             $stmt->execute(array($id_user));
@@ -217,7 +217,7 @@ class DatabaseModel
      *  pokud je uživatel přihlášen vrací jeho data
      *  @return array  data uživatele pokud je přihlášen, pokud není vrací null
      */
-    public function getLoggedUserData():array
+    public function getLoggedUserData()
     {
         if ($this->isUserLogged()) {
             $id_user = $_SESSION[$this->userSessionKey];
@@ -272,15 +272,14 @@ class DatabaseModel
     {
         $userId = $this->getLoggedUserId();
         $time = date("Y/m/d");
-        $stmt = $this->pdo->prepare("INSERT INTO ".TABLE_POST." (id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, hodnoceni, UZIVATEL_id_uzivatel, cesta)
-        VALUES (:id_prispevek, :datum, :nadpis, :text, :id_recenzent, :recenzovano, :hodnoceni, :UZIVATEL_id_uzivatel, :cesta)");
+        $stmt = $this->pdo->prepare("INSERT INTO ".TABLE_POST." (id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, UZIVATEL_id_uzivatel, cesta)
+        VALUES (:id_prispevek, :datum, :nadpis, :text, :id_recenzent, :recenzovano, :UZIVATEL_id_uzivatel, :cesta)");
         $stmt->bindValue(':id_prispevek', NULL); 
         $stmt->bindValue(':datum', $time);
         $stmt->bindValue(':nadpis', $title);
         $stmt->bindValue(':text', $text);
         $stmt->bindValue(':id_recenzent', -1);
         $stmt->bindValue(':recenzovano', 0);
-        $stmt->bindValue(':hodnoceni', 0);
         $stmt->bindValue(':UZIVATEL_id_uzivatel', $userId);
         $stmt->bindValue(':cesta', $path);
 
@@ -350,7 +349,7 @@ class DatabaseModel
      */
     public function deletePost(int $postId):bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM ".TABLE_POST." WHERE id_uzivatel=?");
+        $stmt = $this->pdo->prepare("DELETE FROM ".TABLE_POST." WHERE id_prispevek=?");
     
         try {
             $stmt->execute(array($postId));
@@ -452,7 +451,7 @@ class DatabaseModel
      *  @param int $id_role id role
      *  @return string   název role
      */
-    public function getRoleNameById(int $id_role):string
+    public function getRoleNameById(int $id_role)
     {
         if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_ROLE." WHERE id_role=?")) {
             $stmt->execute(array($id_role));

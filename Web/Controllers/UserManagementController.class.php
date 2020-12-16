@@ -38,11 +38,11 @@ class UserManagementController implements IController
         elseif (isset($_POST['action']) and $_POST['action'] == "promote" and isset($_POST['id_uzivatel'])) {
             // provedu povyseni uzivatele
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
-            $ok = $this->db->promoteUser(intval($role), intval($_POST['id_uzivatel']));
+            $ok = $this->db->promoteUser($role[0]['ROLE_id_role'], intval($_POST['id_uzivatel']));
 
             //získání nových údajů
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
-            $role_name = $this->db->getRoleNameById($role);
+            $role_name = $this->db->getRoleNameById($role[0]['ROLE_id_role']);
 
             if ($ok) {
                 $tplData['user_action'] = "Uživatel s ID:$_POST[id_uzivatel] byl povýšen na roli: $role_name.";
@@ -54,11 +54,11 @@ class UserManagementController implements IController
         elseif (isset($_POST['action']) and $_POST['action'] == "demote"and isset($_POST['id_uzivatel'])) {
             // provedu ponizeni uzivatele
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
-            $ok = $this->db->demoteUser(intval($role), intval($_POST['id_uzivatel']));
+            $ok = $this->db->demoteUser($role[0]['ROLE_id_role'], intval($_POST['id_uzivatel']));
 
             //získání nových údajů
             $role = $this->db->getUserRoleId(intval($_POST['id_uzivatel']));
-            $role_name = $this->db->getRoleNameById($role);
+            $role_name = $this->db->getRoleNameById($role[0]['ROLE_id_role']);
             
             if ($ok) {
                 $tplData['user_action'] = "Uživatel s ID:$_POST[id_uzivatel] byl ponížen na roli: $role_name.";

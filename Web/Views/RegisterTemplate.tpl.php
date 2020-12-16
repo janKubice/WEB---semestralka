@@ -13,7 +13,7 @@ $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Registe
 
 //Informace o registraci
 if (isset($tplData['registrationStatus'])) {
-    echo "<div class='align-middle alert alert-primary w-25 p-3' role='alert'>$tplData[registrationStatus]</div>";
+    echo "<div class='center container alert alert-primary col-md-6 col-sm-6'>$tplData[registrationStatus]</div>";
 }
 
 //vytvoření registračního formuláře

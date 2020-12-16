@@ -78,7 +78,7 @@ if (isset($tplData['userRole'])) {
                             <td>
                                 " . htmlspecialchars($rev['jmeno']) . " 
                                 " . htmlspecialchars($rev['prijmeni']) . " 
-                                " . htmlspecialchars($rev['login']) . ")
+                                (" . htmlspecialchars($rev['login']) . ")
                             </td>
                         <td><input class='btn btn-warning' type='button' onclick='saveReviewerId($rev[id_uzivatel])' name='potvrzeni' value='Zvolit'></td>
                     </tr>";

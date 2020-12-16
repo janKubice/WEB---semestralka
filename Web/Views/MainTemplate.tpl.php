@@ -15,6 +15,9 @@ if (isset($tplData['user'])){
     $user = $tplData['user'];
 }
 
+if(isset($tplData['status'])){
+    echo "<div class='center alert alert-danger col-md-6 col-sm-6'>$tplData[status]</div>";
+}
 
 $res = "";
 
@@ -25,7 +28,7 @@ if (isset($tplData['posts'])) {
                     <div class='statusText'></div>
                         <h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                         <p><i class='fa fa-calendar'></i> $post[datum]</p>
-                        <p>" . htmlspecialchars($post['text']) . "</p>";
+                        <p>$post[text]</p>";
 
         //vytvoření odkazu ke stažení
         if (strlen($post['cesta']) > 0) {

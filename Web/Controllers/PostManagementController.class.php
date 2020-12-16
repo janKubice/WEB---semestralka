@@ -29,10 +29,10 @@ class PostManagementController implements IController
         } else {
             $tplData['userRole'] = -1;
         }
-        
         //požadavek na přiřazení článku recenzentovi
         if (isset($_POST['potvrzeni'])) {
-            if (isset($_POST['reviewer_id'])) {
+            if (isset($_POST['reviewer_id']) && intval($_POST['reviewer_id']) != 0) {
+                
                 $res = $this->db->setReviewerToPost($_POST['post_id'], $_POST['reviewer_id']);
                 if ($res) {
                     $tplData['status'] = "Článek byl v pořádku přiřazen";

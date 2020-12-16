@@ -24,6 +24,7 @@ class MainController implements IController
         //požadavek na smazání článku
         if (isset($_POST['delete']) && $_POST['delete'] == 'Smazat') {
             $this->db->deletePost($_POST['id_post']);
+            $tplData['status'] = "Smazání článku proběhlo v pořádku";
         }
 
         //zjištění a uložení role uživatele
