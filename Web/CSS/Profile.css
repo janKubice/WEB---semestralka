@@ -75,3 +75,7 @@ tr:nth-child(even) {
 .regBtn:hover {
   background-color: rgb(16, 202, 78);
 }
+
+.title{
+  width: 70%;
+}

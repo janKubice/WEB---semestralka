@@ -19,7 +19,6 @@ class ProfileController implements IController
     {
         global $tplData;
         $tplData['title'] = $pageTitle;
-
         //požadavek na smazání článku
         if (isset($_POST['delete'])) {
             if ($_POST['delete'] == 'Smazat') {
@@ -54,16 +53,26 @@ class ProfileController implements IController
                 $tplData['releaseStatus'] .= ", tvůj článek se nepodařilo zpracovat";
             }
             //soubor je v pořádku 
-            else {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    $res = $this->db->addPost($_POST['title'], $_POST['text'], $target_file);
-                    if ($res) {
-                        $tplData['releaseStatus'] = "Článek v pořádku vyšel";
+            else {         
+                if ($_FILES["fileToUpload"]["size"] == 0){
+                    $res = $this->db->addPost($_POST['title'], $_POST['text'], "");
+                        if ($res) {
+                            $tplData['releaseStatus'] = "Článek v pořádku vyšel";
+                        } else {
+                            $tplData['releaseStatus'] = "Článek se nepodařilo vydat";
+                        }
+                }
+                else {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                        $res = $this->db->addPost($_POST['title'], $_POST['text'], $target_file);
+                        if ($res) {
+                            $tplData['releaseStatus'] = "Článek v pořádku vyšel";
+                        } else {
+                            $tplData['releaseStatus'] = "Článek se nepodařilo vydat";
+                        }
                     } else {
-                        $tplData['releaseStatus'] = "Článek se nepodařilo vydat";
+                        $tplData['releaseStatus'] = "Nepodařilo se nehrát soubor, článek se nepodařilo vydat";
                     }
-                } else {
-                    $tplData['releaseStatus'] = "Nepodařilo se nehrát soubor, článek se nepodařilo vydat";
                 }
             }
         }

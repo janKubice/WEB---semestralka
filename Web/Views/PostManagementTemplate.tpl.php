@@ -18,7 +18,7 @@ if (isset($tplData['status'])) {
 
 if (isset($tplData['userRole'])) {
     if ($tplData['userRole'] != 3) {
-        echo "<div class='alert'>Stránka dostupná pouze pro administrátory</div>";
+        echo "<div class='center alert alert-danger col-md-6 col-sm-6'>Stránka dostupná pouze pro administrátory</div>";
     } else {
         if (isset($tplData['posts'])) {
             foreach ($tplData['posts'] as $post) {

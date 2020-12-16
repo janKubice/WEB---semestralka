@@ -10,7 +10,11 @@ $tplHeaders = new TemplateBasics();
 // hlavička
 $tplData['title'] = 'Články';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/UserManagement.css", $tplData['logged'], $tplData['userRole']);
-$user = $tplData['user'];
+
+if (isset($tplData['user'])){
+    $user = $tplData['user'];
+}
+
 
 $res = "";
 

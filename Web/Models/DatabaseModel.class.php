@@ -56,11 +56,10 @@ class DatabaseModel
      */
     public function deleteUser(int $userId):bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM ".TABLE_USER." WHERE id_uzivatel = :id ");
-        $stmt->bindValue(':id', $userId); 
-
+        $stmt = $this->pdo->prepare("DELETE FROM ".TABLE_USER." WHERE id_uzivatel=?");
+    
         try {
-            $stmt->execute();
+            $stmt->execute(array($userId));
             return true;
         } catch (\Throwable $th) {
             return false;
@@ -73,8 +72,14 @@ class DatabaseModel
     */
     public function getAllUsers():array
     {
-        $users = $this->selectFromTable(TABLE_USER);
-        return $users;
+        if($stmt = $this->pdo->prepare("SELECT * FROM uzivatel")) {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -91,9 +96,14 @@ class DatabaseModel
             return false;
         }
 
-        $updateStatementWithValues = "ROLE_id_role='$id_role'";
-        $whereStatement = "id_uzivatel=$id_user";
-        return $this->updateInTable(TABLE_USER, $updateStatementWithValues, $whereStatement);
+        try {
+            $stmt = $this->pdo->prepare("UPDATE uzivatel SET ROLE_id_role = ? WHERE id_uzivatel = ?");
+            $res = $stmt->execute(array($id_role, $id_user));
+            return $res;
+        } catch (\Throwable $th) {
+            return null;
+        }
+        
     }
 
     /**
@@ -110,9 +120,13 @@ class DatabaseModel
             return false;
         }
 
-        $updateStatementWithValues = "ROLE_id_role='$id_role'";
-        $whereStatement = "id_uzivatel=$id_user";
-        return $this->updateInTable(TABLE_USER, $updateStatementWithValues, $whereStatement);
+        try {
+            $stmt = $this->pdo->prepare("UPDATE uzivatel SET ROLE_id_role = ? WHERE id_uzivatel = ?");
+            $res = $stmt->execute(array($id_role, $id_user));
+            return $res;
+        } catch (\Throwable $th) {
+            return null;
+        }
     }
 
     /**
@@ -122,11 +136,14 @@ class DatabaseModel
      */
     public function getUserRoleId(int $id_user):int
     {
-        $users = $this->selectFromTable(TABLE_USER, "id_uzivatel=$id_user");
-        if (empty($users)) {
+        if($stmt = $this->pdo->prepare("SELECT ROLE_id_role FROM ".TABLE_USER." WHERE id_uzivatel=?")) {
+            $stmt->execute(array($id_user));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
             return null;
         }
-        return $users[0]['ROLE_id_role'];
     }
 
     /**
@@ -136,11 +153,14 @@ class DatabaseModel
      */
     public function getUserRole(int $id_role):array
     {
-        $role = $this->selectFromTable(TABLE_ROLE, "id_role=$id_role");
-        if (empty($role)) {
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_ROLE." WHERE id_role=?")) {
+            $stmt->execute(array($id_role));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result[0];
+        }
+        else{
             return null;
         }
-        return $role[0];
     }
 
     /**
@@ -151,13 +171,13 @@ class DatabaseModel
      */
     public function userLogin(string $login, string $heslo):bool
     {
-        $where = "login='$login' AND heslo='$heslo'";
-        $user = $this->selectFromTable(TABLE_USER, $where);
-
-        if (count($user)) {
-            $_SESSION[$this->userSessionKey] = $user[0]['id_uzivatel'];
+        if($stmt = $this->pdo->prepare("SELECT * FROM uzivatel WHERE login=? AND heslo=?")) {
+            $stmt->execute(array($login, $heslo));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            $_SESSION[$this->userSessionKey] = $result[0]['id_uzivatel'];
             return true;
-        } else {
+        }
+        else{
             return false;
         }
     }
@@ -204,12 +224,14 @@ class DatabaseModel
             if ($id_user == null) {
                 $this->userLogout();
             } else {
-                $userData = $this->selectFromTable(TABLE_USER, "id_uzivatel=$id_user");
-                if (empty($userData)) {
+                $stmt = $this->pdo->prepare("SELECT * FROM uzivatel WHERE id_uzivatel=?");
+                $stmt->execute(array($id_user));
+                $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+                if (empty($result)) {
                     $this->userLogout();
                     return null;
                 } else {
-                    return $userData[0];
+                    return $result[0];
                 }
             }
         } else {
@@ -223,8 +245,14 @@ class DatabaseModel
      */
     public function getReviewers():array
     {
-        $users = $this->selectFromTable(TABLE_USER, "ROLE_id_role>=2");
-        return $users;
+        if($stmt = $this->pdo->prepare("SELECT * FROM uzivatel WHERE ROLE_id_role>=2")) {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        }
     }
 
     //------------------------Konec práce s uživatelem------------------------
@@ -243,11 +271,25 @@ class DatabaseModel
     public function addPost(string $title, string $text, string $path = ""):bool
     {
         $userId = $this->getLoggedUserId();
-        echo $cesta;
         $time = date("Y/m/d");
-        $insertStatement = "id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, hodnoceni, UZIVATEL_id_uzivatel, cesta";
-        $insertValues = "'NULL', '$time', '$title', '$text', '-1', '0', '0', '$userId', '$path'";
-        return $this->insertIntoTable(TABLE_POST, $insertStatement, $insertValues);
+        $stmt = $this->pdo->prepare("INSERT INTO ".TABLE_POST." (id_prispevek, datum, nadpis, text, id_recenzent, recenzovano, hodnoceni, UZIVATEL_id_uzivatel, cesta)
+        VALUES (:id_prispevek, :datum, :nadpis, :text, :id_recenzent, :recenzovano, :hodnoceni, :UZIVATEL_id_uzivatel, :cesta)");
+        $stmt->bindValue(':id_prispevek', NULL); 
+        $stmt->bindValue(':datum', $time);
+        $stmt->bindValue(':nadpis', $title);
+        $stmt->bindValue(':text', $text);
+        $stmt->bindValue(':id_recenzent', -1);
+        $stmt->bindValue(':recenzovano', 0);
+        $stmt->bindValue(':hodnoceni', 0);
+        $stmt->bindValue(':UZIVATEL_id_uzivatel', $userId);
+        $stmt->bindValue(':cesta', $path);
+
+        try {
+            $stmt->execute();
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**
@@ -257,11 +299,14 @@ class DatabaseModel
      */
     public function getPostById(int $id_post):array
     {
-        $post = $this->selectFromTable(TABLE_POST, "id_prispevek=$id_post");
-        if (empty($post)) {
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_POST." WHERE id_prispevek=?")) {
+            $stmt->execute(array($id_post));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result[0];
+        }
+        else{
             return null;
         }
-        return $post[0];
     }
 
     /**
@@ -272,9 +317,13 @@ class DatabaseModel
      */
     public function updatePostStatus(int $idPost, int $status):bool
     {
-        $updateStatementWithValues = "recenzovano='$status'";
-        $whereStatement = "id_prispevek=$idPost";
-        return $this->updateInTable(TABLE_POST, $updateStatementWithValues, $whereStatement);
+        $stmt = $this->pdo->prepare("UPDATE ".TABLE_POST." SET recenzovano = ? WHERE id_prispevek = ?");
+        try {
+            $result = $stmt->execute(array($status, $idPost,));
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**
@@ -285,9 +334,13 @@ class DatabaseModel
      */
     public function setReviewerToPost(int $post, int $rev):bool
     {
-        $updateStatementWithValues = "id_recenzent='$rev'";
-        $whereStatement = "id_prispevek=$post";
-        return $this->updateInTable(TABLE_POST, $updateStatementWithValues, $whereStatement);
+        $stmt = $this->pdo->prepare("UPDATE ".TABLE_POST." SET id_recenzent = ? WHERE id_prispevek = ?");
+        try {
+            $result = $stmt->execute(array($rev, $post,));
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
     
     /**
@@ -297,11 +350,12 @@ class DatabaseModel
      */
     public function deletePost(int $postId):bool
     {
-        $q = "DELETE FROM ".TABLE_POST." WHERE id_prispevek = $postId";
-        $res = $this->pdo->query($q);
-        if ($res) {
+        $stmt = $this->pdo->prepare("DELETE FROM ".TABLE_POST." WHERE id_uzivatel=?");
+    
+        try {
+            $stmt->execute(array($postId));
             return true;
-        } else {
+        } catch (\Throwable $th) {
             return false;
         }
     }
@@ -313,8 +367,14 @@ class DatabaseModel
      */
     public function getUserPosts(int $idUser):array
     {
-        $posts = $this->selectFromTable(TABLE_POST, "UZIVATEL_id_uzivatel=$idUser", "id_prispevek DESC");
-        return $posts;
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_POST." WHERE UZIVATEL_id_uzivatel=? ORDER BY id_prispevek DESC")) {
+            $stmt->execute(array($idUser));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -323,8 +383,14 @@ class DatabaseModel
      */
     public function getAllReviewedPosts():array
     {
-        $posts = $this->selectFromTable(TABLE_POST, "recenzovano=1", "id_prispevek DESC");
-        return $posts;
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_POST." WHERE recenzovano=1 ORDER BY id_prispevek DESC")) {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -333,8 +399,14 @@ class DatabaseModel
      */
     public function getNotReviewPosts():array
     {
-        $posts = $this->selectFromTable(TABLE_POST, "id_recenzent=-1");
-        return $posts;
+       if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_POST." WHERE id_recenzent=-1")) {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -344,8 +416,14 @@ class DatabaseModel
      */
     public function getPostToReviewToUser(int $id_user):array
     {
-        $posts = $this->selectFromTable(TABLE_POST, "id_recenzent=$id_user AND recenzovano=0");
-        return $posts;
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_POST." WHERE id_recenzent=? AND recenzovano=0")) {
+            $stmt->execute(array($id_user));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        }
     }
 
      //-------------------------Konec práce s příspěvky------------------------------
@@ -359,8 +437,14 @@ class DatabaseModel
      */
     public function getAllRoles():array
     {
-        $q = "SELECT * FROM ".TABLE_ROLE;
-        return $this->pdo->query($q)->fetchAll();
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_ROLE)) {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result;
+        }
+        else{
+            return null;
+        };
     }
 
     /**
@@ -370,107 +454,15 @@ class DatabaseModel
      */
     public function getRoleNameById(int $id_role):string
     {
-        $role = $this->selectFromTable(TABLE_ROLE, "id_role=$id_role");
-        if (empty($role)) {
-            return null;
+        if($stmt = $this->pdo->prepare("SELECT * FROM ".TABLE_ROLE." WHERE id_role=?")) {
+            $stmt->execute(array($id_role));
+            $result = $stmt->fetchAll(PDO::FETCH_NAMED);
+            return $result[0]['nazev'];
         }
-        return $role[0]['nazev'];
-    }
-
-    //-----------Konecp práce s rolemi-------------------------
-
-    //-----------obecné metody-------------------------
-
-    /**
-     *  vybere z tabulky
-     *  @param string $tableName jméno tabulky
-     *  @param string $whereStatement podmínka výběru
-     *  @param string $orderByStatement řazení
-     *  @return array   pole výsleků
-     */
-    public function selectFromTable(string $tableName, string $whereStatement = "", string $orderByStatement = ""):array
-    {   
-        $q = "SELECT * FROM ".$tableName
-            .(($whereStatement == "") ? "" : " WHERE $whereStatement")
-            .(($orderByStatement == "") ? "" : " ORDER BY $orderByStatement");
-        $obj = $this->executeQuery($q);
-
-        if ($obj == null) {
-            return [];
-        }
-
-        return $obj->fetchAll();
-    }
-
-    /**
-     *  vybere z tabulky
-     *  @param string $tableName jméno tabulky
-     *  @param string $whereStatement podmínka výběru
-     *  @return bool   true zda se povedla operace, jinak false
-     */
-    public function deleteFromTable(string $tableName, string $whereStatement):bool
-    {
-        $q = "DELETE FROM $tableName WHERE $whereStatement";
-        $obj = $this->executeQuery($q);
-        if ($obj == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     *  vybere z tabulky
-     *  @param string $tableName jméno tabulky
-     *  @param string $whereStatement podmínka výběru
-     *  @param string $orderByStatement řazení
-     *  @return bool   true zda se povedla operace, jinak false
-     */
-    public function insertIntoTable(string $tableName, string $insertStatement, string $insertValue):bool
-    {
-        $q = "INSERT INTO $tableName($insertStatement) VALUES ($insertValue)";
-        $obj = $this->executeQuery($q);
-
-        if ($obj == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     *  vybere z tabulky
-     *  @param string $tableName jméno tabulky
-     *  @param string $whereStatement podmínka výběru
-     *  @param string $orderByStatement řazení
-     *  @return array   true zda se povedla operace, jinak false
-     */
-    public function updateInTable(string $tableName, string $updateStatementWithValues, string $whereValue):bool
-    {
-        $q = "UPDATE $tableName SET $updateStatementWithValues WHERE $whereValue";
-        $obj = $this->executeQuery($q);
-        if ($obj == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     *  vybere z tabulky
-     *  @param string $tableName jméno tabulky
-     *  @param string $whereStatement podmínka výběru
-     *  @param string $orderByStatement řazení
-     */
-    private function executeQuery(string $dotaz)
-    {
-        $res = $this->pdo->query($dotaz);
-        if ($res) {
-            return $res;
-        } else {
-            $error = $this->pdo->erroInfo();
-            echo $error[2];
+        else{
             return null;
         }
     }
+
+    //-----------Konec práce s rolemi-------------------------
 }

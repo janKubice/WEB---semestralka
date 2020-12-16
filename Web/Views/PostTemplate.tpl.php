@@ -23,7 +23,7 @@ if (isset($tplData['post'])){
     $res .= "<div class='center col-md-6 col-sm-6 post jumbotron'>
                 <div class='statusText'></div><h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                     <p><i class='fa fa-calendar'></i> $post[datum]</p>
-                    <p>" . htmlspecialchars($post['text']) . "</p>";
+                    <p>$post[text]</p>";
 
     if (isset($tplData['user']) && ($user['ROLE_id_role'] == 3 || $user['id_uzivatel'] == $post['UZIVATEL_id_uzivatel'])){
         $res .= "<div class='center col-md-6 col-sm-6'>

@@ -7,6 +7,10 @@ $tplHeaders = new TemplateBasics();
 ?>
 
 <?php
+if (!isset($tplData['userRole'])){
+    $tplData['userRole'] = 0;
+}
+
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/UserManagement.css", $tplData['logged'], $tplData['userRole']);
 
 //vypsání hlášky pokud je dostupná

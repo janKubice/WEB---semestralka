@@ -33,7 +33,7 @@ if (isset($tplData['userRole'])) {
                             <div class='statusText'></div>
                                 <h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                                 <p><i class='fa fa-calendar'></i> $post[datum]</p>
-                                <p>" . htmlspecialchars($post['text']) . "</p>";
+                                <p>$post[text]</p>";
 
                 //odkaz ke stažení přílohy
                 if (strlen($post['cesta']) > 0){

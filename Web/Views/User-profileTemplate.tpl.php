@@ -55,7 +55,7 @@ if ($tplData['logged']) {
                 <div><p class='newPostText center col-md-6 col-sm-6'>Napsat nový článek</p></div>
                 <div class='postWriting center col-md-6 col-sm-6 jumbotron'>
                     <form action='' method='POST' id='postForm' enctype='multipart/form-data'>
-                        <div><p>Titulek</p><input type='text' size='50' name='title' required></div>
+                        <div><p>Titulek</p><input class='title' type='text' size='35' name='title' required></div>
                         <div><p>Text:</p>
                         <i class='fas fa-pencil-alt prefix'></i>
                         <textarea id='editor' class='md-textarea form-control' rows='3' name='text' form='postForm'>Enter text here...</textarea></div>
@@ -93,7 +93,7 @@ if ($tplData['logged']) {
             $res .= "<i style='cursor: pointer;' onclick='openPost($post[id_prispevek])' class='fa fa-external-link openPost' style='font-size:48px;'></i>
                     <h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                     <p><i class='fa fa-calendar'></i> $post[datum]</p>
-                    <p>" . htmlspecialchars($post['text']) . "</p>";
+                    <p>$post[text]</p>";
             if (strlen($post['cesta']) > 0){
                 $name = str_replace("Uploads/", "", $post['cesta']);
                 $res .= "<a href=" . htmlspecialchars($post['cesta']) . " download=" . htmlspecialchars($name) . ">Stáhnout přiložený soubor</a>";
@@ -108,7 +108,7 @@ if ($tplData['logged']) {
                 <h2>Pro zobrazení profilu se přihlašte</h2> 
                 <h2>Pokud nemáte účet, můžete si jeden zdarma vytvořit:
                 <a class='regBtn' href='index.php?page=register'>Registrovat</a></h2> 
-            </div></br></br>";
+            </div></div></br></br>";
 }
 echo $res;
 
