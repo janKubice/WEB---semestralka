@@ -1,14 +1,14 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
 
 <?php
 // hlavička
-if (!isset($tplData['title'])){
+if (!isset($tplData['title'])) {
     $tplData['title'] = "Nenalázá se zde žádný článek";
 }
 
@@ -17,7 +17,7 @@ $res = "";
 
 
 //vypsání článku
-if (isset($tplData['post'])){
+if (isset($tplData['post'])) {
     $post = $tplData['post'];
     $user = $tplData['user'];
     $res .= "<div class='center col-md-6 col-sm-6 post jumbotron'>
@@ -25,17 +25,17 @@ if (isset($tplData['post'])){
                     <p><i class='fa fa-calendar'></i> $post[datum]</p>
                     <p>$post[text]</p>";
 
-    if (isset($tplData['user']) && ($user['ROLE_id_role'] == 3 || $user['id_uzivatel'] == $post['UZIVATEL_id_uzivatel'])){
+    if (isset($tplData['user']) && ($user['ROLE_id_role'] == 3 || $user['id_uzivatel'] == $post['UZIVATEL_id_uzivatel'])) {
         $res .= "<div class='center col-md-6 col-sm-6'>
                     <form action='' method='POST'>
                         <input type='hidden' name='id_post' value='$post[id_prispevek]'>
                         <input class='btn btn-warning' type='submit' name='delete' value='Smazat'>
                     </form>
                 </div></div>";
-    }     
+    }
 }
 //hláška pokud se na stránce nenachází článek
-else{
+else {
     $res .= "<div class='center container alert alert-primary col-md-6 col-sm-6'>Nenachází se zde žádný článek</div>";
 }
 

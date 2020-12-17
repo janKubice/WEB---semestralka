@@ -1,7 +1,7 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
@@ -11,11 +11,11 @@ $tplHeaders = new TemplateBasics();
 $tplData['title'] = 'Články';
 $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/UserManagement.css", $tplData['logged'], $tplData['userRole']);
 
-if (isset($tplData['user'])){
+if (isset($tplData['user'])) {
     $user = $tplData['user'];
 }
 
-if(isset($tplData['status'])){
+if (isset($tplData['status'])) {
     echo "<div class='center alert alert-danger col-md-6 col-sm-6'>$tplData[status]</div>";
 }
 
@@ -61,7 +61,7 @@ $tplHeaders->getHTMLFooter()
 
 <script>
     /** Otevře post */
-    function openPost(postID){
+    function openPost(postID) {
         openWindowWithPost("index.php?page=clanek", {
             postID: postID,
         });
@@ -69,22 +69,22 @@ $tplHeaders->getHTMLFooter()
 
     /** Otevře stránku na nové kartě */
     function openWindowWithPost(url, data) {
-    var form = document.createElement("form");
-    form.target = "_blank";
-    form.method = "POST";
-    form.action = url;
-    form.style.display = "none";
+        var form = document.createElement("form");
+        form.target = "_blank";
+        form.method = "POST";
+        form.action = url;
+        form.style.display = "none";
 
-    for (var key in data) {
-        var input = document.createElement("input");
-        input.type = "hidden";
-        input.name = key;
-        input.value = data[key];
-        form.appendChild(input);
+        for (var key in data) {
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = data[key];
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
     }
-
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-}
 </script>

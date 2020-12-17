@@ -1,7 +1,7 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>

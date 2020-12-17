@@ -1,7 +1,7 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
@@ -29,7 +29,7 @@ if (isset($tplData['userRole'])) {
                         <h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                         <p><i class='fa fa-calendar'></i> $post[datum]</p>
                         <p>$post[text]</p>";
-              
+
                 //vypsání cesty ke stažení přílohy
                 if (strlen($post['cesta']) > 0) {
                     $name = str_replace("Uploads/", "", $post['cesta']);
@@ -48,18 +48,18 @@ if (isset($tplData['userRole'])) {
                 //tlačítko na otevření článku
                 $res .= "</br><i style='cursor: pointer;' onclick='openPost($post[id_prispevek])' 
                         class='fa fa-external-link openPost' style='font-size:48px;'></i>";
-                
+
                 //formulář na otevření modalus vybráním recenzenta
                 $res .= "<form action=''>
                             <input class='btn btn-warning' data-toggle='modal' data-target='#staticBackdrop' type='button' 
                             onclick='savePostId($post[id_prispevek])' name='potvrzeni' value='Vybrat recenzenta'>
                         </form>
                         </div></div>";
-               
+
 
                 //modal na vybrání recenzenta
-                $res .= 
-                "<div class='modal fade' id='staticBackdrop' data-backdrop='static' data-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>
+                $res .=
+                    "<div class='modal fade' id='staticBackdrop' data-backdrop='static' data-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>
                     <div class='modal-dialog'>
                         <div class='modal-content'>
                             <div class='modal-header'>
@@ -69,11 +69,11 @@ if (isset($tplData['userRole'])) {
                                 </button>
                             </div>
                         <div class='modal-body'>";
-                    
+
                 //tabulka s výpisem všech dostupných recenzenů
                 $res .= "<table class='center style= width=100%; jumbotron'>";
                 foreach ($tplData['reviewers'] as $rev) {
-                    $res .= 
+                    $res .=
                         "<tr id=$rev[id_uzivatel]>
                             <td>
                                 " . htmlspecialchars($rev['jmeno']) . " 
@@ -85,7 +85,7 @@ if (isset($tplData['userRole'])) {
                 }
 
                 //formulář na vybrání recenzenta
-                $res .= 
+                $res .=
                     "</table></div>
                         <div class='modal-footer'>
                             <button type='button' class='btn btn-secondary' data-dismiss='modal'>Zavřít</button>
@@ -124,13 +124,13 @@ $tplHeaders->getHTMLFooter()
         if (lastRev > 0)
             document.getElementById(lastRev).style.backgroundColor = "white";
 
-        document.getElementById(id).style.backgroundColor  = "green";
+        document.getElementById(id).style.backgroundColor = "green";
         document.getElementById("revId").value = id;
         document.getElementById("lastRevId").value = id;
     }
 
     //otevře článek v novém okně
-    function openPost(postID){
+    function openPost(postID) {
         openWindowWithPost("index.php?page=clanek", {
             postID: postID,
         });

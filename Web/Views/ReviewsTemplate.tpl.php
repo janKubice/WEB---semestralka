@@ -1,7 +1,7 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
@@ -36,7 +36,7 @@ if (isset($tplData['userRole'])) {
                                 <p>$post[text]</p>";
 
                 //odkaz ke stažení přílohy
-                if (strlen($post['cesta']) > 0){
+                if (strlen($post['cesta']) > 0) {
                     $name = str_replace("Uploads/", "", $post['cesta']);
                     $res .= "<a href=" . htmlspecialchars($post['cesta']) . " download=" . htmlspecialchars($name) . ">Stáhnout přiložený soubor</a>";
                 }
@@ -74,7 +74,7 @@ $tplHeaders->getHTMLFooter()
 
 <script>
     //otevře článek v novém okně
-    function openPost(postID){
+    function openPost(postID) {
         openWindowWithPost("index.php?page=clanek", {
             postID: postID,
         });

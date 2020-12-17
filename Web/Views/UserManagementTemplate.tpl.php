@@ -1,13 +1,13 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
 
 <?php
-if (!isset($tplData['userRole'])){
+if (!isset($tplData['userRole'])) {
     $tplData['userRole'] = 0;
 }
 
@@ -34,11 +34,11 @@ if (isset($tplData['userRole'])) {
                         <th>login</th>
                         <th>Akce</th>
                     </tr>";
-        
+
         foreach ($tplData['users'] as $u) {
             //zjištění názvu role
-            foreach ($tplData['roles'] as $r){
-                if ($r['id_role'] == $u['ROLE_id_role']){
+            foreach ($tplData['roles'] as $r) {
+                if ($r['id_role'] == $u['ROLE_id_role']) {
                     $role = $r['nazev'];
                 }
             }

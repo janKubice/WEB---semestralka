@@ -1,7 +1,7 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
@@ -26,7 +26,7 @@ $res = "";
 if ($tplData['logged']) {
     $u = $tplData['user'];
     $r = $tplData['role'];
-    
+
     //údaje
     $res .= "<div class='col-md-6 col-sm-6 center'> 
             <p class='boldText'>Vaše údaje</p></br>
@@ -94,12 +94,11 @@ if ($tplData['logged']) {
                     <h2>" . htmlspecialchars($post['nadpis']) . "</h2>
                     <p><i class='fa fa-calendar'></i> $post[datum]</p>
                     <p>$post[text]</p>";
-            if (strlen($post['cesta']) > 0){
+            if (strlen($post['cesta']) > 0) {
                 $name = str_replace("Uploads/", "", $post['cesta']);
                 $res .= "<a href=" . htmlspecialchars($post['cesta']) . " download=" . htmlspecialchars($name) . ">Stáhnout přiložený soubor</a>";
             }
             $res .= "</div>";
-            
         }
     }
 } else {
@@ -119,7 +118,7 @@ $tplHeaders->getHTMLFooter()
 
 <script>
     //otevře článek v novém okně
-    function openPost(postID){
+    function openPost(postID) {
         openWindowWithPost("index.php?page=clanek", {
             postID: postID,
         });
@@ -148,8 +147,8 @@ $tplHeaders->getHTMLFooter()
 
     //CKeditor script
     ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
 </script>

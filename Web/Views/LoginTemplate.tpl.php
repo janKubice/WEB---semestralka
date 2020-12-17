@@ -1,7 +1,7 @@
 <?php
 global $tplData;
 
-require(DIRECTORY_VIEWS ."/TemplateBasics.class.php");
+require(DIRECTORY_VIEWS . "/TemplateBasics.class.php");
 $tplHeaders = new TemplateBasics();
 
 ?>
@@ -14,7 +14,7 @@ $tplHeaders->getHTMLHeader($tplData['title'], "http://127.0.0.1:8080/CSS/Login.c
 
 
 //status přihlášení -> když je vypíšu
-if(isset($tplData['loginStatus'])){
+if (isset($tplData['loginStatus'])) {
     echo "<div class='center alert alert-danger col-md-6 col-sm-6'>$tplData[loginStatus]</div>";
 }
 
