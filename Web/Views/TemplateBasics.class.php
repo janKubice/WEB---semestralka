@@ -43,7 +43,7 @@ class TemplateBasics
                             continue;
                         }
                         //má roli autora
-                        if ($role == 1) {
+                        if ($role == 1 || $role == 0) {
                             if (
                                 $key == 'clanek' || $key == 'sprava' || $key == 'sprava_post'
                                 || $key == 'recenze'

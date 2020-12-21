@@ -49,20 +49,22 @@ if ($tplData['logged']) {
                 </tr>
             </table>
             </div>";
-
-    //Psaní článku
-    $res .= "<div class='divLeft'></div>
-                <div><p class='newPostText center col-md-6 col-sm-6'>Napsat nový článek</p></div>
-                <div class='postWriting center col-md-6 col-sm-6 jumbotron'>
-                    <form action='' method='POST' id='postForm' enctype='multipart/form-data'>
-                        <div><p>Titulek</p><input class='title' type='text' size='35' name='title' required></div>
-                        <div><p>Text:</p>
-                        <i class='fas fa-pencil-alt prefix'></i>
-                        <textarea id='editor' class='md-textarea form-control' rows='3' name='text' form='postForm'>Enter text here...</textarea></div>
-                        <input form='postForm' id='fileToUpload' name='fileToUpload' type='file'/>
-                        <input class='btn btn-success btn-block' type='submit' name='action' value='Vydat'>
-                    </form>
-                </div>";
+    if ($r['id_role'] > 0){
+        //Psaní článku
+        $res .= "<div class='divLeft'></div>
+        <div><p class='newPostText center col-md-6 col-sm-6'>Napsat nový článek</p></div>
+        <div class='postWriting center col-md-6 col-sm-6 jumbotron'>
+            <form action='' method='POST' id='postForm' enctype='multipart/form-data'>
+                <div><p>Titulek</p><input class='title' type='text' size='35' name='title' required></div>
+                <div><p>Text:</p>
+                <i class='fas fa-pencil-alt prefix'></i>
+                <textarea id='editor' class='md-textarea form-control' rows='3' name='text' form='postForm'>Enter text here...</textarea></div>
+                <input form='postForm' id='fileToUpload' name='fileToUpload' type='file'/>
+                <input class='btn btn-success btn-block' type='submit' name='action' value='Vydat'>
+            </form>
+        </div>";
+    }
+    
 
     //vypsání uživatelovo článků
     if (isset($tplData['posts'])) {

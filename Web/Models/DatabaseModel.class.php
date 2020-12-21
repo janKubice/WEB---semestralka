@@ -174,8 +174,13 @@ class DatabaseModel
         if($stmt = $this->pdo->prepare("SELECT * FROM uzivatel WHERE login=? AND heslo=?")) {
             $stmt->execute(array($login, $heslo));
             $result = $stmt->fetchAll(PDO::FETCH_NAMED);
-            $_SESSION[$this->userSessionKey] = $result[0]['id_uzivatel'];
-            return true;
+            if (!empty($result)){
+                $_SESSION[$this->userSessionKey] = $result[0]['id_uzivatel'];
+                return true;
+            }
+            else{
+                return false;
+            } 
         }
         else{
             return false;
